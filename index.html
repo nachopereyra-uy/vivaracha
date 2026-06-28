@@ -194,11 +194,9 @@ button:focus-visible, a:focus-visible, input:focus-visible{
 .hub-intro{color:var(--ink-soft); font-size:1.08rem; margin-bottom:1.2rem;}
 
 .info-box{
-  background:var(--dorado-bg); border-radius:16px; padding:1.1rem 1.2rem;
-  margin-bottom:1.6rem; font-size:1rem; line-height:1.55;
+  background:var(--dorado-bg); border-radius:16px; padding:1rem 1.2rem;
+  margin-bottom:1.6rem; font-size:.98rem; line-height:1.5;
 }
-.info-box strong{display:block; font-family:var(--font-display); font-size:1.1rem; margin-bottom:.35rem;}
-.info-box .cite{display:block; margin-top:.5rem; font-size:.82rem; color:var(--ink-soft); font-style:italic;}
 
 /* ---------- mi progreso ---------- */
 .progress-card{
@@ -380,6 +378,10 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <form class="welcome-form" id="welcomeForm">
       <label for="nameInput">¿Cómo te llamamos?</label>
       <input type="text" id="nameInput" placeholder="Tu nombre" autocomplete="off">
+      <label for="waInput">WhatsApp (opcional)</label>
+      <input type="tel" id="waInput" placeholder="Ej: 099 123 456" autocomplete="off">
+      <label for="emailInput">Email (opcional)</label>
+      <input type="email" id="emailInput" placeholder="tu@email.com" autocomplete="off">
       <button type="submit" class="btn btn-verde">Empezar</button>
     </form>
   </section>
@@ -389,7 +391,9 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <h1 class="home-greeting" id="homeGreeting">¡Hola!</h1>
     <p class="home-date" id="homeDate"></p>
     <div id="streakWrap"></div>
-    <p class="home-intro">Unos minutos por día alcanzan para mantener la cabeza despierta.</p>
+    <p class="home-intro">Unos minutos por día, y vas a notar la diferencia en tu propia cabeza.</p>
+
+    <div id="homeProgressWrap"></div>
 
     <p class="eyebrow">Elegí qué entrenar hoy</p>
 
@@ -397,7 +401,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-memoria">🧉</div>
       <div class="game-card-body">
         <div class="game-card-title">Memoria</div>
-        <div class="game-card-desc">Vas a notar que se te hace más fácil acordarte de nombres y de dónde dejaste las cosas.</div>
+        <div class="game-card-desc">Para no quedarte en blanco con un nombre, o entrar a una pieza y acordarte enseguida qué venías a buscar.</div>
       </div>
       <div class="chevron">›</div>
     </button>
@@ -406,7 +410,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-atencion">🔍</div>
       <div class="game-card-body">
         <div class="game-card-title">Atención</div>
-        <div class="game-card-desc">Vas a estar más alerta y vas a notar más los detalles a simple vista.</div>
+        <div class="game-card-desc">Para no perderte ningún detalle, y seguir el hilo de una charla larga sin distraerte.</div>
       </div>
       <div class="chevron">›</div>
     </button>
@@ -415,7 +419,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-reflejos">⚡</div>
       <div class="game-card-body">
         <div class="game-card-title">Reflejos</div>
-        <div class="game-card-desc">Vas a sentirte más rápida para reaccionar y decidir en el momento.</div>
+        <div class="game-card-desc">Para reaccionar a tiempo si algo se te cae, o si tenés que frenar de golpe.</div>
       </div>
       <div class="chevron">›</div>
     </button>
@@ -424,16 +428,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-razonamiento">🧩</div>
       <div class="game-card-body">
         <div class="game-card-title">Razonamiento</div>
-        <div class="game-card-desc">Vas a notar la cabeza más despierta para resolver problemas del día a día.</div>
-      </div>
-      <div class="chevron">›</div>
-    </button>
-
-    <button class="game-card" data-action="progress">
-      <div class="game-icon" style="background:var(--dorado-bg);">📈</div>
-      <div class="game-card-body">
-        <div class="game-card-title">Mi progreso</div>
-        <div class="game-card-desc">Mirá cómo fuiste mejorando, sesión a sesión.</div>
+        <div class="game-card-desc">Para que entender algo nuevo —desde un aparato hasta una receta— te resulte más fácil.</div>
       </div>
       <div class="chevron">›</div>
     </button>
@@ -447,18 +442,14 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-memoria">🧉</div>
       <h2>Memoria</h2>
     </div>
-    <p class="hub-intro">La memoria es como un músculo: cuanto más la usás, mejor responde cuando la necesitás.</p>
-    <div class="info-box">
-      <strong>¿Sabías que...?</strong>
-      Estudios clásicos de psicología cognitiva muestran que la mayoría de las personas puede retener entre 4 y 7 elementos en la memoria de corto plazo a la vez. Ejercicios breves y frecuentes son una forma simple de mantenerla activa.
-      <span class="cite">Miller, 1956 — "The Magical Number Seven"; Cowan, 2001.</span>
-    </div>
+    <p class="hub-intro">Memoria es no quedarte pensando "¿a qué vine?" cuando entrás a una habitación.</p>
+    <div class="info-box">💡 Dato curioso: la cabeza puede retener bien solo unas pocas cosas a la vez. Por eso entrenarla de a poquito funciona tan bien.</div>
 
     <button class="game-card" data-exercise="mem-secuencia">
       <div class="game-icon gi-memoria">✨</div>
       <div class="game-card-body">
         <div class="game-card-title">Secuencia</div>
-        <div class="game-card-desc">Repetí el orden en que se iluminan los íconos.</div>
+        <div class="game-card-desc">Para no quedarte en blanco con lo que acabás de escuchar.</div>
         <div class="game-card-best" id="best-mem-secuencia">Sin jugar todavía</div>
       </div>
       <div class="chevron">›</div>
@@ -468,7 +459,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-memoria">🃏</div>
       <div class="game-card-body">
         <div class="game-card-title">Parejas</div>
-        <div class="game-card-desc">Encontrá las parejas de íconos iguales.</div>
+        <div class="game-card-desc">Para acordarte mejor dónde dejaste las cosas.</div>
         <div class="game-card-best" id="best-mem-parejas">Sin jugar todavía</div>
       </div>
       <div class="chevron">›</div>
@@ -481,18 +472,14 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-atencion">🔍</div>
       <h2>Atención</h2>
     </div>
-    <p class="hub-intro">Prestar atención también se entrena. Estos ejercicios te ayudan a estar más alerta y distraerte menos.</p>
-    <div class="info-box">
-      <strong>¿Sabías que...?</strong>
-      El psicólogo Michael Posner describió la atención como un conjunto de redes cerebrales distintas — alerta, orientación y control — que se pueden ejercitar de forma específica con tareas breves de búsqueda visual.
-      <span class="cite">Posner &amp; Petersen, 1990 — "The Attention System of the Human Brain".</span>
-    </div>
+    <p class="hub-intro">Atención es no perderte ningún detalle, aunque la charla se haga larga.</p>
+    <div class="info-box">💡 Dato curioso: la atención es como una linterna — se puede entrenar para que alumbre más y mejor.</div>
 
     <button class="game-card" data-exercise="atn-diferente">
       <div class="game-icon gi-atencion">🔎</div>
       <div class="game-card-body">
         <div class="game-card-title">Encontrá el diferente</div>
-        <div class="game-card-desc">Hallá el ícono distinto entre varios iguales.</div>
+        <div class="game-card-desc">Para no pasar por alto los detalles importantes.</div>
         <div class="game-card-best" id="best-atn-diferente">Sin jugar todavía</div>
       </div>
       <div class="chevron">›</div>
@@ -502,7 +489,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-atencion">🔢</div>
       <div class="game-card-body">
         <div class="game-card-title">Contá los íconos</div>
-        <div class="game-card-desc">Contá cuántas veces aparece un ícono en la pantalla.</div>
+        <div class="game-card-desc">Para mantener la cabeza enfocada, sin perder la cuenta.</div>
         <div class="game-card-best" id="best-atn-contar">Sin jugar todavía</div>
       </div>
       <div class="chevron">›</div>
@@ -515,18 +502,14 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-reflejos">⚡</div>
       <h2>Reflejos</h2>
     </div>
-    <p class="hub-intro">La velocidad para reaccionar y decidir también se mantiene afilada con la práctica.</p>
-    <div class="info-box">
-      <strong>¿Sabías que...?</strong>
-      Estudios con miles de participantes muestran que el tiempo de reacción tiende a alargarse de forma gradual con la edad, aunque la práctica regular ayuda a mantenerlo más afilado.
-      <span class="cite">Der &amp; Deary, 2006 — "Age and sex differences in reaction time in adulthood".</span>
-    </div>
+    <p class="hub-intro">Reflejos es reaccionar a tiempo, sin sentirte un paso atrás.</p>
+    <div class="info-box">💡 Dato curioso: los reflejos se entrenan igual que un músculo. Con práctica, se mantienen más despiertos.</div>
 
     <button class="game-card" data-exercise="ref-estrella">
       <div class="game-icon gi-reflejos">⭐</div>
       <div class="game-card-body">
         <div class="game-card-title">Estrella rápida</div>
-        <div class="game-card-desc">Tocá la estrella en cuanto aparece.</div>
+        <div class="game-card-desc">Para reaccionar a tiempo, sin que te agarre desprevenida.</div>
         <div class="game-card-best" id="best-ref-estrella">Sin jugar todavía</div>
       </div>
       <div class="chevron">›</div>
@@ -536,7 +519,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-reflejos">🎯</div>
       <div class="game-card-body">
         <div class="game-card-title">Elegí rápido</div>
-        <div class="game-card-desc">Tocá solo el ícono correcto, dejá pasar el otro.</div>
+        <div class="game-card-desc">Para decidir rápido y seguro, sin titubear.</div>
         <div class="game-card-best" id="best-ref-elegir">Sin jugar todavía</div>
       </div>
       <div class="chevron">›</div>
@@ -549,18 +532,14 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-razonamiento">🧩</div>
       <h2>Razonamiento</h2>
     </div>
-    <p class="hub-intro">Resolver acertijos simples mantiene la cabeza despierta para los problemas del día a día.</p>
-    <div class="info-box">
-      <strong>¿Sabías que...?</strong>
-      El psicólogo Raymond Cattell diferenció entre la inteligencia "fluida" (resolver problemas nuevos) y la "cristalizada" (el conocimiento acumulado). Mientras una puede cambiar con los años, la otra suele mantenerse o incluso mejorar con la experiencia.
-      <span class="cite">Cattell, 1963 — "Theory of Fluid and Crystallized Intelligence".</span>
-    </div>
+    <p class="hub-intro">Razonamiento es que lo nuevo deje de sentirse complicado.</p>
+    <div class="info-box">💡 Dato curioso: resolver acertijos chiquitos, aunque sean simples, mantiene la cabeza más ágil.</div>
 
     <button class="game-card" data-exercise="raz-patron">
       <div class="game-icon gi-razonamiento">🧩</div>
       <div class="game-card-body">
         <div class="game-card-title">Qué sigue</div>
-        <div class="game-card-desc">Descubrí qué ícono sigue en la secuencia.</div>
+        <div class="game-card-desc">Para que anticiparte a las cosas te resulte más fácil.</div>
         <div class="game-card-best" id="best-raz-patron">Sin jugar todavía</div>
       </div>
       <div class="chevron">›</div>
@@ -570,7 +549,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-icon gi-razonamiento">🌻</div>
       <div class="game-card-body">
         <div class="game-card-title">Ordená por tamaño</div>
-        <div class="game-card-desc">Tocá las flores de la más chica a la más grande.</div>
+        <div class="game-card-desc">Para ordenar tus ideas con más claridad.</div>
         <div class="game-card-best" id="best-raz-orden">Sin jugar todavía</div>
       </div>
       <div class="chevron">›</div>
@@ -586,7 +565,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <div id="mem-secuencia-intro">
       <div class="instructions">
         <strong>Cómo se juega</strong>
-        Vamos a iluminar algunos íconos, uno por uno. Mirá bien el orden y después tocalos en el mismo orden en que aparecieron. Este ejercicio entrena la memoria de corto plazo, la que usás para acordarte de algo que acabás de escuchar.
+        Vamos a iluminar algunos íconos, uno por uno. Mirá el orden y repetilo tocando. Así entrenás la memoria que te hace falta para no quedarte en blanco con lo que acabás de escuchar.
       </div>
       <button class="btn btn-ladrillo" id="mem-secuencia-start">¡Arrancar!</button>
     </div>
@@ -606,7 +585,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <div id="mem-parejas-intro">
       <div class="instructions">
         <strong>Cómo se juega</strong>
-        Hay 12 cartas dadas vuelta, de a pares iguales. Tocá dos para verlas: si coinciden, ¡las encontraste! Este ejercicio entrena la memoria visual, la que te ayuda a recordar dónde dejaste las cosas.
+        Hay 12 cartas dadas vuelta, de a pares. Encontralas y vas a estar entrenando la memoria que te ayuda a acordarte dónde dejaste las llaves o los anteojos.
       </div>
       <button class="btn btn-ladrillo" id="mem-parejas-start">¡Arrancar!</button>
     </div>
@@ -625,7 +604,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <div id="atn-diferente-intro">
       <div class="instructions">
         <strong>Cómo se juega</strong>
-        Todos los íconos son iguales, menos uno. Encontrá el diferente y tocalo lo más rápido que puedas. Este ejercicio entrena la atención visual, la que te ayuda a no pasar por alto los detalles.
+        Todos los íconos son iguales, menos uno. Encontralo rápido, y vas a entrenar la atención que te ayuda a no pasar por alto los detalles importantes.
       </div>
       <button class="btn btn-azul" id="atn-diferente-start">¡Arrancar!</button>
     </div>
@@ -645,7 +624,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <div id="atn-contar-intro">
       <div class="instructions">
         <strong>Cómo se juega</strong>
-        Te vamos a preguntar cuántas veces aparece un ícono en la pantalla. Contá con cuidado antes de responder. Este ejercicio entrena la atención sostenida, la que usás para seguir el hilo en una charla larga.
+        Te vamos a preguntar cuántas veces aparece un ícono. Contá con cuidado: así entrenás la atención que te ayuda a seguir el hilo en una charla larga sin perderte.
       </div>
       <button class="btn btn-azul" id="atn-contar-start">¡Arrancar!</button>
     </div>
@@ -666,7 +645,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <div id="ref-estrella-intro">
       <div class="instructions">
         <strong>Cómo se juega</strong>
-        Va a aparecer una estrella ⭐ en algún lugar del recuadro. Tocala apenas la veas. Este ejercicio entrena tu tiempo de reacción, el mismo que usás para frenar a tiempo o atajar algo que se cae.
+        Va a aparecer una estrella ⭐ en algún lugar del recuadro. Tocala apenas la veas: entrenás la rapidez para reaccionar a tiempo si algo se te cae o te desequilibrás.
       </div>
       <button class="btn btn-ciruela" id="ref-estrella-start">¡Arrancar!</button>
     </div>
@@ -688,7 +667,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <div id="ref-elegir-intro">
       <div class="instructions">
         <strong>Cómo se juega</strong>
-        Va a aparecer una estrella ⭐ o una luna 🌙 en algún lugar del recuadro. Tocá solo cuando sea la estrella, y dejá pasar la luna sin tocarla. Este ejercicio entrena la rapidez para decidir entre dos opciones.
+        Va a aparecer una estrella ⭐ o una luna 🌙. Tocá solo cuando sea la estrella, y dejá pasar la luna: entrenás la rapidez para decidir sin titubear.
       </div>
       <button class="btn btn-ciruela" id="ref-elegir-start">¡Arrancar!</button>
     </div>
@@ -710,7 +689,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <div id="raz-patron-intro">
       <div class="instructions">
         <strong>Cómo se juega</strong>
-        Mirá la secuencia de íconos y elegí, entre las tres opciones, cuál sigue. Este ejercicio entrena el razonamiento lógico, el que usás para anticiparte y planificar.
+        Mirá la secuencia y elegí qué sigue. Entrenás la cabeza para anticiparte a las cosas, en vez de ir siempre un paso atrás.
       </div>
       <button class="btn btn-verde" id="raz-patron-start">¡Arrancar!</button>
     </div>
@@ -730,7 +709,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <div id="raz-orden-intro">
       <div class="instructions">
         <strong>Cómo se juega</strong>
-        Vas a ver cuatro flores de distintos tamaños. Tocalas en orden, de la más chica a la más grande. Este ejercicio entrena la capacidad de organizar y clasificar, útil para ordenar tareas o prioridades.
+        Tocá las flores en orden, de la más chica a la más grande. Entrenás la capacidad de organizar tus ideas con más claridad.
       </div>
       <button class="btn btn-verde" id="raz-orden-start">¡Arrancar!</button>
     </div>
@@ -739,17 +718,6 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="game-status" id="ro-status">Tocá del más chico al más grande</div>
       <div class="size-row" id="ro-row"></div>
     </div>
-  </section>
-
-  <!-- MI PROGRESO -->
-  <section class="screen" id="screen-progress" hidden>
-    <div class="hub-header">
-      <div class="game-icon" style="background:var(--dorado-bg);">📈</div>
-      <h2>Mi progreso</h2>
-    </div>
-    <p class="hub-intro">Acá podés ver cómo te fue evolucionando en cada ejercicio, sesión a sesión.</p>
-    <p class="progress-empty" id="progressEmpty">Todavía no jugaste ningún ejercicio. ¡Animate a probar el primero!</p>
-    <div id="progressList"></div>
   </section>
 
   <!-- RESULT -->
@@ -847,7 +815,6 @@ var SCREEN_PARENT = {
   'screen-hub-atencion': 'screen-home',
   'screen-hub-reflejos': 'screen-home',
   'screen-hub-razonamiento': 'screen-home',
-  'screen-progress': 'screen-home',
   'screen-ex-mem-secuencia': 'screen-hub-memoria',
   'screen-ex-mem-parejas': 'screen-hub-memoria',
   'screen-ex-atn-diferente': 'screen-hub-atencion',
@@ -877,9 +844,33 @@ qs('#backBtn').addEventListener('click', function(){
 qs('#welcomeForm').addEventListener('submit', function(e){
   e.preventDefault();
   var name = qs('#nameInput').value.trim();
+  var whatsapp = qs('#waInput').value.trim();
+  var email = qs('#emailInput').value.trim();
   setStore('vivaracha_name', name);
+  setStore('vivaracha_whatsapp', whatsapp);
+  setStore('vivaracha_email', email);
+  submitLead(name, whatsapp, email);
   goHome();
 });
+
+/* Esto guarda el nombre/WhatsApp/email solo en este dispositivo (localStorage).
+   Para juntar estos datos como leads centralizados, conectá un Google Form:
+   1) Creá un Google Form con 3 preguntas de texto corto (Nombre, WhatsApp, Email).
+   2) Abrí el form, click derecho > Ver código fuente, buscá cada "entry.XXXXXXX".
+   3) Completá FORM_URL y los 3 entry IDs de abajo. */
+var LEAD_FORM_URL = ''; // ej: 'https://docs.google.com/forms/d/e/TU_ID/formResponse'
+var LEAD_FORM_FIELDS = { name: '', whatsapp: '', email: '' }; // ej: { name:'entry.111', whatsapp:'entry.222', email:'entry.333' }
+
+function submitLead(name, whatsapp, email){
+  if(!LEAD_FORM_URL || !LEAD_FORM_FIELDS.name) return;
+  try{
+    var data = new FormData();
+    data.append(LEAD_FORM_FIELDS.name, name || '');
+    data.append(LEAD_FORM_FIELDS.whatsapp, whatsapp || '');
+    data.append(LEAD_FORM_FIELDS.email, email || '');
+    fetch(LEAD_FORM_URL, { method:'POST', mode:'no-cors', body:data });
+  }catch(e){}
+}
 
 function goHome(){
   renderHome();
@@ -915,6 +906,7 @@ function renderHome(){
       streakWrap.appendChild(chip3);
     }
   }
+  renderHomeProgress();
 }
 
 function computeStreak(dates){
@@ -968,15 +960,23 @@ var EXERCISE_META = {
   'raz-orden':      { label:'Ordená por tamaño',    icon:'🌻', higherIsBetter:true,  fmt:function(v){ return v + '/4'; } }
 };
 
-function renderProgress(){
-  var list = qs('#progressList');
-  list.innerHTML = '';
-  var any = false;
+function renderHomeProgress(){
+  var wrap = qs('#homeProgressWrap');
+  wrap.innerHTML = '';
 
-  Object.keys(EXERCISE_META).forEach(function(key){
+  var keysWithHistory = Object.keys(EXERCISE_META).filter(function(key){
+    return getHistory(key).length > 0;
+  });
+  if(keysWithHistory.length === 0) return;
+
+  var eyebrow = document.createElement('p');
+  eyebrow.className = 'eyebrow';
+  eyebrow.style.marginTop = '1.6rem';
+  eyebrow.textContent = 'Tu evolución';
+  wrap.appendChild(eyebrow);
+
+  keysWithHistory.forEach(function(key){
     var hist = getHistory(key);
-    if(hist.length === 0) return;
-    any = true;
     var meta = EXERCISE_META[key];
 
     var card = document.createElement('div');
@@ -1026,21 +1026,9 @@ function renderProgress(){
     compare.textContent = 'Primera vez: ' + meta.fmt(first) + ' → Mejor marca: ' + meta.fmt(bestAll) + (improved ? ' · ¡mejoraste!' : '');
     card.appendChild(compare);
 
-    list.appendChild(card);
+    wrap.appendChild(card);
   });
-
-  qs('#progressEmpty').hidden = any;
-  list.hidden = !any;
 }
-
-qsa('.game-card[data-action]').forEach(function(card){
-  card.addEventListener('click', function(){
-    if(card.dataset.action === 'progress'){
-      renderProgress();
-      showScreen('screen-progress');
-    }
-  });
-});
 
 /* ===================== hubs ===================== */
 var HUB_EXERCISES = {
@@ -1092,14 +1080,14 @@ function openExercise(key){
 var lastExerciseKey = null;
 
 var BENEFIT_BY_CAT = {
-  'mem-secuencia': 'Practicar seguido ayuda a que cueste menos acordarte de las cosas en el día a día.',
-  'mem-parejas': 'Practicar seguido ayuda a que cueste menos acordarte de las cosas en el día a día.',
-  'atn-diferente': 'Con la práctica vas a notar que te distraés menos y prestás más atención a los detalles.',
-  'atn-contar': 'Con la práctica vas a notar que te distraés menos y prestás más atención a los detalles.',
-  'ref-estrella': 'Cada práctica suma para mantener reflejos rápidos y decisiones seguras.',
-  'ref-elegir': 'Cada práctica suma para mantener reflejos rápidos y decisiones seguras.',
-  'raz-patron': 'Seguir practicando ayuda a mantener la cabeza ágil para resolver problemas.',
-  'raz-orden': 'Seguir practicando ayuda a mantener la cabeza ágil para resolver problemas.'
+  'mem-secuencia': 'Practicar esto seguido ayuda a que no se te escape lo que acabás de escuchar.',
+  'mem-parejas': 'Practicar esto seguido ayuda a que no se te escape dónde dejaste las cosas.',
+  'atn-diferente': 'Con la práctica se te van a escapar menos detalles importantes.',
+  'atn-contar': 'Con la práctica vas a seguir el hilo de las charlas más fácil, sin perderte.',
+  'ref-estrella': 'Cada práctica suma para reaccionar a tiempo, sin que nada te agarre desprevenida.',
+  'ref-elegir': 'Cada práctica suma para decidir rápido y seguro, sin titubear.',
+  'raz-patron': 'Seguir practicando ayuda a que anticiparte a las cosas te resulte más fácil.',
+  'raz-orden': 'Seguir practicando ayuda a que lo nuevo te resulte cada vez menos complicado.'
 };
 
 function showResult(opts){
