@@ -141,6 +141,14 @@ button:focus-visible, a:focus-visible, input:focus-visible{
   color:var(--ink); margin-bottom:1.1rem;
 }
 .welcome-form input::placeholder{color:var(--ink-soft);}
+.contact-hint{
+  font-size:.92rem; color:var(--ink-soft); margin-bottom:.7rem; margin-top:1.4rem;
+}
+.contact-error{
+  background:rgba(182,69,47,0.12); color:var(--rojo-suave);
+  border-radius:12px; padding:.8rem 1rem; font-size:.95rem;
+  font-weight:700; margin-top:-.3rem; margin-bottom:1.1rem;
+}
 
 /* ---------- home ---------- */
 .home-greeting{font-size:2rem; color:var(--ink);}
@@ -208,9 +216,21 @@ button:focus-visible, a:focus-visible, input:focus-visible{
   font-weight:700; font-family:var(--font-display); font-size:1.15rem;
 }
 .progress-icon{font-size:1.4rem;}
-.progress-bars{display:flex; align-items:flex-end; gap:.4rem; height:64px; margin-bottom:.8rem;}
-.progress-bar{flex:1; background:var(--verde); border-radius:4px 4px 0 0; min-height:6px;}
+.trend-badge{
+  font-family:var(--font-body); font-size:.82rem; font-weight:800;
+  color:var(--ink-soft); background:var(--border-soft);
+  border-radius:999px; padding:.3rem .7rem; flex-shrink:0;
+}
+.trend-badge.trend-up{ color:var(--verde-d); background:var(--verde-bg); }
+.progress-bars{display:flex; align-items:flex-end; gap:.4rem; height:64px; margin-bottom:.4rem;}
+.progress-bar{flex:1; background:rgba(59,110,78,0.35); border-radius:4px 4px 0 0; min-height:6px;}
+.progress-bar-current{background:var(--verde);}
+.progress-dates{
+  display:flex; justify-content:space-between; font-size:.78rem;
+  color:var(--ink-soft); margin-bottom:.7rem;
+}
 .progress-compare{color:var(--ink-soft); font-size:.95rem; font-weight:700;}
+.progress-hint{color:var(--ink-soft); font-size:1.02rem; line-height:1.5;}
 .progress-empty{color:var(--ink-soft); text-align:center; padding:2rem 1rem; font-size:1.08rem;}
 
 /* ---------- generic exercise header ---------- */
@@ -378,10 +398,12 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <form class="welcome-form" id="welcomeForm">
       <label for="nameInput">¿Cómo te llamamos?</label>
       <input type="text" id="nameInput" placeholder="Tu nombre" autocomplete="off">
-      <label for="waInput">WhatsApp (opcional)</label>
+      <p class="contact-hint">Dejanos uno de los dos, para poder avisarte de novedades:</p>
+      <label for="waInput">WhatsApp</label>
       <input type="tel" id="waInput" placeholder="Ej: 099 123 456" autocomplete="off">
-      <label for="emailInput">Email (opcional)</label>
+      <label for="emailInput">Email</label>
       <input type="email" id="emailInput" placeholder="tu@email.com" autocomplete="off">
+      <p class="contact-error" id="contactError" hidden>Dejanos tu WhatsApp o tu email (con uno de los dos alcanza) para poder avisarte de novedades.</p>
       <button type="submit" class="btn btn-verde">Empezar</button>
     </form>
   </section>
@@ -799,6 +821,55 @@ function setStore(key, val){
     }
   }catch(e){}
 }
+
+/* ===================== identidad, sesiones y cola de sincronizacion =====================
+   Pensado para conectar Supabase mas adelante sin tener que rehacer la lógica.
+   Esquema de tablas sugerido:
+     users(id, name, whatsapp, email, created_at)
+     sessions(id, user_id, started_at)
+     exercise_results(id, user_id, session_id, exercise_key, value, played_at)
+   Todo evento (lead nuevo, sesion iniciada, ejercicio jugado) se guarda en
+   'vivaracha_sync_queue' ademas de en su lugar habitual. Cuando completes
+   SUPABASE_URL y SUPABASE_ANON_KEY abajo, syncToSupabase() se encarga de
+   vaciar la cola hacia tus tablas (hoy es un no-op seguro). */
+
+function generateUUID(){
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
+    var r = Math.random()*16|0;
+    var v = (c === 'x') ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+function getUserId(){
+  var id = getStore('vivaracha_user_id', null);
+  if(!id){
+    id = generateUUID();
+    setStore('vivaracha_user_id', id);
+  }
+  return id;
+}
+
+var currentSessionId = generateUUID();
+
+var SUPABASE_URL = '';        // ej: 'https://tuproyecto.supabase.co'
+var SUPABASE_ANON_KEY = '';   // tu anon/public key de Supabase
+
+function syncToSupabase(){
+  if(!SUPABASE_URL || !SUPABASE_ANON_KEY) return; // todavía no configurado, no hace nada
+  // TODO: cuando conectes Supabase, leé 'vivaracha_sync_queue' (getStore) y
+  // mandá cada evento sin sincronizar a su tabla con supabase-js o fetch a la REST API.
+  // Al terminar, marcá cada evento como synced (o vaciá la cola) con setStore.
+}
+
+function queueEvent(type, payload){
+  var queue = getStore('vivaracha_sync_queue', []);
+  queue.push({ type: type, payload: payload, queued_at: new Date().toISOString() });
+  if(queue.length > 300) queue = queue.slice(queue.length - 300);
+  setStore('vivaracha_sync_queue', queue);
+  syncToSupabase();
+}
+
 function todayISO(){
   var d = new Date();
   return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());
@@ -846,31 +917,29 @@ qs('#welcomeForm').addEventListener('submit', function(e){
   var name = qs('#nameInput').value.trim();
   var whatsapp = qs('#waInput').value.trim();
   var email = qs('#emailInput').value.trim();
+
+  if(!whatsapp && !email){
+    qs('#contactError').hidden = false;
+    qs('#waInput').focus();
+    return;
+  }
+  qs('#contactError').hidden = true;
+
+  var userId = getUserId();
   setStore('vivaracha_name', name);
   setStore('vivaracha_whatsapp', whatsapp);
   setStore('vivaracha_email', email);
-  submitLead(name, whatsapp, email);
+
+  queueEvent('lead', {
+    user_id: userId,
+    name: name,
+    whatsapp: whatsapp,
+    email: email,
+    created_at: new Date().toISOString()
+  });
+
   goHome();
 });
-
-/* Esto guarda el nombre/WhatsApp/email solo en este dispositivo (localStorage).
-   Para juntar estos datos como leads centralizados, conectá un Google Form:
-   1) Creá un Google Form con 3 preguntas de texto corto (Nombre, WhatsApp, Email).
-   2) Abrí el form, click derecho > Ver código fuente, buscá cada "entry.XXXXXXX".
-   3) Completá FORM_URL y los 3 entry IDs de abajo. */
-var LEAD_FORM_URL = ''; // ej: 'https://docs.google.com/forms/d/e/TU_ID/formResponse'
-var LEAD_FORM_FIELDS = { name: '', whatsapp: '', email: '' }; // ej: { name:'entry.111', whatsapp:'entry.222', email:'entry.333' }
-
-function submitLead(name, whatsapp, email){
-  if(!LEAD_FORM_URL || !LEAD_FORM_FIELDS.name) return;
-  try{
-    var data = new FormData();
-    data.append(LEAD_FORM_FIELDS.name, name || '');
-    data.append(LEAD_FORM_FIELDS.whatsapp, whatsapp || '');
-    data.append(LEAD_FORM_FIELDS.email, email || '');
-    fetch(LEAD_FORM_URL, { method:'POST', mode:'no-cors', body:data });
-  }catch(e){}
-}
 
 function goHome(){
   renderHome();
@@ -944,6 +1013,14 @@ function pushHistory(exerciseKey, value){
   hist.push({ date: todayISO(), value: value });
   if(hist.length > 20) hist = hist.slice(hist.length - 20);
   setStore('vivaracha_hist_' + exerciseKey, hist);
+
+  queueEvent('exercise_result', {
+    user_id: getStore('vivaracha_user_id', null),
+    session_id: currentSessionId,
+    exercise_key: exerciseKey,
+    value: value,
+    played_at: new Date().toISOString()
+  });
 }
 function getHistory(exerciseKey){
   return getStore('vivaracha_hist_' + exerciseKey, []);
@@ -960,14 +1037,22 @@ var EXERCISE_META = {
   'raz-orden':      { label:'Ordená por tamaño',    icon:'🌻', higherIsBetter:true,  fmt:function(v){ return v + '/4'; } }
 };
 
+var MONTHS_SHORT = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+function formatShortDate(iso){
+  var parts = iso.split('-');
+  var month = MONTHS_SHORT[parseInt(parts[1],10) - 1];
+  return parseInt(parts[2],10) + ' ' + month;
+}
+
 function renderHomeProgress(){
   var wrap = qs('#homeProgressWrap');
   wrap.innerHTML = '';
 
-  var keysWithHistory = Object.keys(EXERCISE_META).filter(function(key){
-    return getHistory(key).length > 0;
-  });
-  if(keysWithHistory.length === 0) return;
+  var allKeys = Object.keys(EXERCISE_META);
+  var totalPlays = allKeys.reduce(function(sum, key){ return sum + getHistory(key).length; }, 0);
+  if(totalPlays === 0) return;
+
+  var qualifyingKeys = allKeys.filter(function(key){ return getHistory(key).length >= 2; });
 
   var eyebrow = document.createElement('p');
   eyebrow.className = 'eyebrow';
@@ -975,7 +1060,15 @@ function renderHomeProgress(){
   eyebrow.textContent = 'Tu evolución';
   wrap.appendChild(eyebrow);
 
-  keysWithHistory.forEach(function(key){
+  if(qualifyingKeys.length === 0){
+    var hint = document.createElement('p');
+    hint.className = 'progress-hint';
+    hint.textContent = 'Ya jugaste ' + totalPlays + ' ' + (totalPlays === 1 ? 'vez' : 'veces') + '. Jugá una vez más cada ejercicio y vas a empezar a ver acá cómo evolucionás.';
+    wrap.appendChild(hint);
+    return;
+  }
+
+  qualifyingKeys.forEach(function(key){
     var hist = getHistory(key);
     var meta = EXERCISE_META[key];
 
@@ -989,20 +1082,29 @@ function renderHomeProgress(){
     iconSpan.textContent = meta.icon;
     var nameSpan = document.createElement('span');
     nameSpan.textContent = meta.label;
+    nameSpan.style.flex = '1';
     head.appendChild(iconSpan);
     head.appendChild(nameSpan);
-    card.appendChild(head);
 
     var recent = hist.slice(-8);
+    var lastVal = recent[recent.length - 1].value;
+    var prevVal = recent[recent.length - 2].value;
+    var justImproved = meta.higherIsBetter ? lastVal > prevVal : lastVal < prevVal;
+    var badge = document.createElement('span');
+    badge.className = 'trend-badge' + (justImproved ? ' trend-up' : '');
+    badge.textContent = justImproved ? '↑ Mejoraste' : '→ Constante';
+    head.appendChild(badge);
+    card.appendChild(head);
+
     var values = recent.map(function(h){ return h.value; });
     var min = Math.min.apply(null, values);
     var max = Math.max.apply(null, values);
 
     var bars = document.createElement('div');
     bars.className = 'progress-bars';
-    recent.forEach(function(h){
+    recent.forEach(function(h, i){
       var bar = document.createElement('div');
-      bar.className = 'progress-bar';
+      bar.className = 'progress-bar' + (i === recent.length - 1 ? ' progress-bar-current' : '');
       var pct;
       if(max === min){
         pct = 60;
@@ -1016,14 +1118,24 @@ function renderHomeProgress(){
     });
     card.appendChild(bars);
 
+    var datesRow = document.createElement('div');
+    datesRow.className = 'progress-dates';
+    var dateFirst = document.createElement('span');
+    dateFirst.textContent = formatShortDate(recent[0].date);
+    var dateLast = document.createElement('span');
+    dateLast.textContent = 'hoy';
+    datesRow.appendChild(dateFirst);
+    datesRow.appendChild(dateLast);
+    card.appendChild(datesRow);
+
     var allValues = hist.map(function(h){ return h.value; });
     var first = hist[0].value;
     var bestAll = meta.higherIsBetter ? Math.max.apply(null, allValues) : Math.min.apply(null, allValues);
-    var improved = meta.higherIsBetter ? bestAll > first : bestAll < first;
+    var improvedOverall = meta.higherIsBetter ? bestAll > first : bestAll < first;
 
     var compare = document.createElement('div');
     compare.className = 'progress-compare';
-    compare.textContent = 'Primera vez: ' + meta.fmt(first) + ' → Mejor marca: ' + meta.fmt(bestAll) + (improved ? ' · ¡mejoraste!' : '');
+    compare.textContent = 'Empezaste en ' + meta.fmt(first) + ' → tu mejor marca: ' + meta.fmt(bestAll) + (improvedOverall ? ' · ¡mejoraste!' : '');
     card.appendChild(compare);
 
     wrap.appendChild(card);
@@ -1815,6 +1927,12 @@ function finishRazOrden(){
 
 /* ===================== init ===================== */
 (function init(){
+  queueEvent('session', {
+    id: currentSessionId,
+    user_id: getStore('vivaracha_user_id', null),
+    started_at: new Date().toISOString()
+  });
+
   var name = getStore('vivaracha_name', null);
   if(name === null){
     showScreen('screen-welcome');
