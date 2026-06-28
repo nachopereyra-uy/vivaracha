@@ -35,7 +35,6 @@
   --ciruela-bg:rgba(122,75,110,0.10);
 
   --rojo-suave:#B6452F;
-  --verde-ok:#2C5239;
 
   --font-display:'Fraunces', Georgia, serif;
   --font-body:'Nunito', -apple-system, sans-serif;
@@ -152,6 +151,9 @@ button:focus-visible, a:focus-visible, input:focus-visible{
   background:var(--dorado-bg); color:var(--ladrillo-d);
   font-weight:800; font-size:.98rem;
 }
+.home-intro{
+  margin-top:1.4rem; font-size:1.1rem; color:var(--ink-soft);
+}
 .eyebrow{
   text-transform:uppercase; letter-spacing:.08em; font-size:.85rem;
   font-weight:800; color:var(--ink-soft); margin-top:2rem; margin-bottom:.9rem;
@@ -185,10 +187,38 @@ button:focus-visible, a:focus-visible, input:focus-visible{
   background:none; border:none; width:100%;
 }
 
-/* ---------- generic game header ---------- */
+/* ---------- hub (pantalla intermedia por categoría) ---------- */
+.hub-header{display:flex; align-items:center; gap:.8rem; margin-bottom:1rem;}
+.hub-header .game-icon{width:50px; height:50px; font-size:1.6rem;}
+.hub-header h2{font-size:1.6rem;}
+.hub-intro{color:var(--ink-soft); font-size:1.08rem; margin-bottom:1.2rem;}
+
+.info-box{
+  background:var(--dorado-bg); border-radius:16px; padding:1.1rem 1.2rem;
+  margin-bottom:1.6rem; font-size:1rem; line-height:1.55;
+}
+.info-box strong{display:block; font-family:var(--font-display); font-size:1.1rem; margin-bottom:.35rem;}
+.info-box .cite{display:block; margin-top:.5rem; font-size:.82rem; color:var(--ink-soft); font-style:italic;}
+
+/* ---------- mi progreso ---------- */
+.progress-card{
+  background:var(--card-bg); border:2px solid var(--border-soft);
+  border-radius:18px; padding:1.1rem; margin-bottom:1rem;
+}
+.progress-head{
+  display:flex; align-items:center; gap:.6rem; margin-bottom:.9rem;
+  font-weight:700; font-family:var(--font-display); font-size:1.15rem;
+}
+.progress-icon{font-size:1.4rem;}
+.progress-bars{display:flex; align-items:flex-end; gap:.4rem; height:64px; margin-bottom:.8rem;}
+.progress-bar{flex:1; background:var(--verde); border-radius:4px 4px 0 0; min-height:6px;}
+.progress-compare{color:var(--ink-soft); font-size:.95rem; font-weight:700;}
+.progress-empty{color:var(--ink-soft); text-align:center; padding:2rem 1rem; font-size:1.08rem;}
+
+/* ---------- generic exercise header ---------- */
 .game-header{display:flex; align-items:center; gap:.8rem; margin-bottom:1.4rem;}
 .game-header .game-icon{width:50px; height:50px; font-size:1.6rem;}
-.game-header h2{font-size:1.6rem;}
+.game-header h2{font-size:1.5rem;}
 .game-status{
   text-align:center; font-weight:800; font-size:1.05rem;
   color:var(--ink-soft); margin-bottom:1rem; min-height:1.4em;
@@ -204,7 +234,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
 }
 .instructions strong{display:block; font-family:var(--font-display); font-size:1.3rem; margin-bottom:.5rem;}
 
-/* ---------- memoria ---------- */
+/* ---------- memoria: secuencia ---------- */
 .mem-grid{
   display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem;
   margin-bottom:1.5rem;
@@ -218,9 +248,21 @@ button:focus-visible, a:focus-visible, input:focus-visible{
 .mem-cell.active{background:var(--ladrillo); transform:scale(1.06); border-color:var(--ladrillo-d);}
 .mem-cell.correct{background:var(--verde-bg); border-color:var(--verde);}
 .mem-cell.wrong{background:rgba(182,69,47,0.18); border-color:var(--rojo-suave);}
-.mem-cell:disabled{opacity:1;}
 
-/* ---------- atencion ---------- */
+/* ---------- memoria: parejas ---------- */
+.memp-grid{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:.6rem;
+  margin-bottom:1.2rem;
+}
+.memp-card{
+  aspect-ratio:1; border-radius:14px; border:2px solid var(--border-soft);
+  background:var(--ciruela-bg); font-size:1.7rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .12s ease;
+}
+.memp-card.matched{background:var(--verde-bg); border-color:var(--verde); opacity:0.85;}
+
+/* ---------- atencion: encontra el diferente / contar ---------- */
 .atn-grid{
   display:grid; gap:.7rem; margin-bottom:1.2rem;
 }
@@ -235,8 +277,11 @@ button:focus-visible, a:focus-visible, input:focus-visible{
   25%{transform:translateX(-5px);}
   75%{transform:translateX(5px);}
 }
+.ac-question{
+  text-align:center; font-size:1.3rem; font-weight:700; margin-bottom:1rem;
+}
 
-/* ---------- reflejos ---------- */
+/* ---------- reflejos: estrella rapida / elegi rapido ---------- */
 .ref-area{
   position:relative; height:300px; border-radius:18px;
   border:2px dashed var(--border-soft); background:var(--card-bg);
@@ -248,12 +293,13 @@ button:focus-visible, a:focus-visible, input:focus-visible{
   display:flex; align-items:center; justify-content:center;
   border:none;
 }
+.ref-target.distractor{background:var(--azul);}
 .ref-target:active{transform:scale(0.92);}
 .ref-feedback{
   text-align:center; font-weight:800; color:var(--verde-d); min-height:1.4em; margin-bottom:.6rem;
 }
 
-/* ---------- razonamiento ---------- */
+/* ---------- razonamiento: que sigue ---------- */
 .raz-seq{
   display:grid; grid-template-columns:repeat(5,1fr); gap:.5rem;
   margin-bottom:1.6rem;
@@ -266,22 +312,42 @@ button:focus-visible, a:focus-visible, input:focus-visible{
 .raz-box.unknown{
   border:2px dashed var(--verde); color:var(--verde); font-weight:800;
 }
-.raz-options{display:flex; gap:.8rem;}
-.raz-opt{
+
+/* ---------- opciones de respuesta (compartido: que sigue / contar) ---------- */
+.choice-row{display:flex; gap:.8rem;}
+.choice-opt{
   flex:1; aspect-ratio:1; border-radius:16px; border:2px solid var(--border-soft);
   background:var(--card-bg); font-size:2.1rem;
   display:flex; align-items:center; justify-content:center;
   transition:transform .08s ease;
 }
-.raz-opt:active{transform:scale(0.95);}
-.raz-opt.correct{background:var(--verde-bg); border-color:var(--verde);}
-.raz-opt.wrong{background:rgba(182,69,47,0.18); border-color:var(--rojo-suave);}
+.choice-opt:active{transform:scale(0.95);}
+.choice-opt.correct{background:var(--verde-bg); border-color:var(--verde);}
+.choice-opt.wrong{background:rgba(182,69,47,0.18); border-color:var(--rojo-suave);}
+
+/* ---------- razonamiento: ordena por tamano ---------- */
+.size-row{
+  display:flex; gap:.8rem; align-items:flex-end; justify-content:center;
+  min-height:170px; margin-bottom:1.5rem;
+}
+.size-box{
+  flex:1; max-width:110px; aspect-ratio:1; border-radius:16px;
+  border:2px solid var(--border-soft); background:var(--card-bg);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .08s ease;
+}
+.size-box.correct{background:var(--verde-bg); border-color:var(--verde);}
+.size-box.wrong{background:rgba(182,69,47,0.18); border-color:var(--rojo-suave);}
 
 /* ---------- result ---------- */
 .result-wrap{text-align:center; padding-top:1rem;}
 .result-mark{font-size:3rem;}
 .result-title{font-size:1.9rem; margin-top:.5rem;}
 .result-message{color:var(--ink-soft); font-size:1.15rem; margin-top:.7rem; line-height:1.6;}
+.result-benefit{
+  color:var(--verde-d); font-size:1.02rem; margin-top:.9rem; line-height:1.6;
+  font-weight:700;
+}
 .result-best{
   display:inline-block; margin-top:1.2rem; padding:.7rem 1.2rem;
   background:var(--dorado-bg); color:var(--ladrillo-d); border-radius:14px;
@@ -323,45 +389,51 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <h1 class="home-greeting" id="homeGreeting">¡Hola!</h1>
     <p class="home-date" id="homeDate"></p>
     <div id="streakWrap"></div>
+    <p class="home-intro">Unos minutos por día alcanzan para mantener la cabeza despierta.</p>
 
-    <p class="eyebrow">Elegí tu ejercicio</p>
+    <p class="eyebrow">Elegí qué entrenar hoy</p>
 
-    <button class="game-card" data-game="memoria">
+    <button class="game-card" data-cat="memoria">
       <div class="game-icon gi-memoria">🧉</div>
       <div class="game-card-body">
         <div class="game-card-title">Memoria</div>
-        <div class="game-card-desc">Recordá el orden en que aparecen los íconos.</div>
-        <div class="game-card-best" id="bestMemoria">Sin jugar todavía</div>
+        <div class="game-card-desc">Vas a notar que se te hace más fácil acordarte de nombres y de dónde dejaste las cosas.</div>
       </div>
       <div class="chevron">›</div>
     </button>
 
-    <button class="game-card" data-game="atencion">
+    <button class="game-card" data-cat="atencion">
       <div class="game-icon gi-atencion">🔍</div>
       <div class="game-card-body">
         <div class="game-card-title">Atención</div>
-        <div class="game-card-desc">Encontrá el que es diferente, lo más rápido que puedas.</div>
-        <div class="game-card-best" id="bestAtencion">Sin jugar todavía</div>
+        <div class="game-card-desc">Vas a estar más alerta y vas a notar más los detalles a simple vista.</div>
       </div>
       <div class="chevron">›</div>
     </button>
 
-    <button class="game-card" data-game="reflejos">
+    <button class="game-card" data-cat="reflejos">
       <div class="game-icon gi-reflejos">⚡</div>
       <div class="game-card-body">
         <div class="game-card-title">Reflejos</div>
-        <div class="game-card-desc">Tocá la estrella en cuanto aparezca.</div>
-        <div class="game-card-best" id="bestReflejos">Sin jugar todavía</div>
+        <div class="game-card-desc">Vas a sentirte más rápida para reaccionar y decidir en el momento.</div>
       </div>
       <div class="chevron">›</div>
     </button>
 
-    <button class="game-card" data-game="razonamiento">
+    <button class="game-card" data-cat="razonamiento">
       <div class="game-icon gi-razonamiento">🧩</div>
       <div class="game-card-body">
         <div class="game-card-title">Razonamiento</div>
-        <div class="game-card-desc">Descubrí qué sigue en la secuencia.</div>
-        <div class="game-card-best" id="bestRazonamiento">Sin jugar todavía</div>
+        <div class="game-card-desc">Vas a notar la cabeza más despierta para resolver problemas del día a día.</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
+
+    <button class="game-card" data-action="progress">
+      <div class="game-icon" style="background:var(--dorado-bg);">📈</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Mi progreso</div>
+        <div class="game-card-desc">Mirá cómo fuiste mejorando, sesión a sesión.</div>
       </div>
       <div class="chevron">›</div>
     </button>
@@ -369,94 +441,315 @@ button:focus-visible, a:focus-visible, input:focus-visible{
     <button class="reset-link" id="resetLink">Borrar mis datos y empezar de nuevo</button>
   </section>
 
-  <!-- MEMORIA -->
-  <section class="screen" id="screen-memoria" hidden>
-    <div class="game-header">
+  <!-- HUB: MEMORIA -->
+  <section class="screen" id="screen-hub-memoria" hidden>
+    <div class="hub-header">
       <div class="game-icon gi-memoria">🧉</div>
       <h2>Memoria</h2>
     </div>
+    <p class="hub-intro">La memoria es como un músculo: cuanto más la usás, mejor responde cuando la necesitás.</p>
+    <div class="info-box">
+      <strong>¿Sabías que...?</strong>
+      Estudios clásicos de psicología cognitiva muestran que la mayoría de las personas puede retener entre 4 y 7 elementos en la memoria de corto plazo a la vez. Ejercicios breves y frecuentes son una forma simple de mantenerla activa.
+      <span class="cite">Miller, 1956 — "The Magical Number Seven"; Cowan, 2001.</span>
+    </div>
 
-    <div id="memoriaIntro">
-      <div class="instructions">
-        <strong>Cómo se juega</strong>
-        Vamos a iluminar algunos íconos, uno por uno. Mirá bien el orden. Después te toca a vos: tocalos en el mismo orden en que aparecieron.
+    <button class="game-card" data-exercise="mem-secuencia">
+      <div class="game-icon gi-memoria">✨</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Secuencia</div>
+        <div class="game-card-desc">Repetí el orden en que se iluminan los íconos.</div>
+        <div class="game-card-best" id="best-mem-secuencia">Sin jugar todavía</div>
       </div>
-      <button class="btn btn-ladrillo" id="memoriaStart">¡Arrancar!</button>
-    </div>
+      <div class="chevron">›</div>
+    </button>
 
-    <div id="memoriaPlay" hidden>
-      <div class="round-counter" id="memRoundCounter"></div>
-      <div class="game-status" id="memStatus"></div>
-      <div class="mem-grid" id="memGrid"></div>
-    </div>
+    <button class="game-card" data-exercise="mem-parejas">
+      <div class="game-icon gi-memoria">🃏</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Parejas</div>
+        <div class="game-card-desc">Encontrá las parejas de íconos iguales.</div>
+        <div class="game-card-best" id="best-mem-parejas">Sin jugar todavía</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
   </section>
 
-  <!-- ATENCION -->
-  <section class="screen" id="screen-atencion" hidden>
-    <div class="game-header">
+  <!-- HUB: ATENCION -->
+  <section class="screen" id="screen-hub-atencion" hidden>
+    <div class="hub-header">
       <div class="game-icon gi-atencion">🔍</div>
       <h2>Atención</h2>
     </div>
+    <p class="hub-intro">Prestar atención también se entrena. Estos ejercicios te ayudan a estar más alerta y distraerte menos.</p>
+    <div class="info-box">
+      <strong>¿Sabías que...?</strong>
+      El psicólogo Michael Posner describió la atención como un conjunto de redes cerebrales distintas — alerta, orientación y control — que se pueden ejercitar de forma específica con tareas breves de búsqueda visual.
+      <span class="cite">Posner &amp; Petersen, 1990 — "The Attention System of the Human Brain".</span>
+    </div>
 
-    <div id="atencionIntro">
-      <div class="instructions">
-        <strong>Cómo se juega</strong>
-        Todos los íconos son iguales, menos uno. Encontrá el diferente y tocalo lo más rápido que puedas.
+    <button class="game-card" data-exercise="atn-diferente">
+      <div class="game-icon gi-atencion">🔎</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Encontrá el diferente</div>
+        <div class="game-card-desc">Hallá el ícono distinto entre varios iguales.</div>
+        <div class="game-card-best" id="best-atn-diferente">Sin jugar todavía</div>
       </div>
-      <button class="btn btn-azul" id="atencionStart">¡Arrancar!</button>
-    </div>
+      <div class="chevron">›</div>
+    </button>
 
-    <div id="atencionPlay" hidden>
-      <div class="round-counter" id="atnRoundCounter"></div>
-      <div class="game-status" id="atnStatus">Encontrá el diferente</div>
-      <div class="atn-grid" id="atnGrid"></div>
-    </div>
+    <button class="game-card" data-exercise="atn-contar">
+      <div class="game-icon gi-atencion">🔢</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Contá los íconos</div>
+        <div class="game-card-desc">Contá cuántas veces aparece un ícono en la pantalla.</div>
+        <div class="game-card-best" id="best-atn-contar">Sin jugar todavía</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
   </section>
 
-  <!-- REFLEJOS -->
-  <section class="screen" id="screen-reflejos" hidden>
-    <div class="game-header">
+  <!-- HUB: REFLEJOS -->
+  <section class="screen" id="screen-hub-reflejos" hidden>
+    <div class="hub-header">
       <div class="game-icon gi-reflejos">⚡</div>
       <h2>Reflejos</h2>
     </div>
-
-    <div id="reflejosIntro">
-      <div class="instructions">
-        <strong>Cómo se juega</strong>
-        Va a aparecer una estrella ⭐ en algún lugar del recuadro. Tocala apenas la veas.
-      </div>
-      <button class="btn btn-ciruela" id="reflejosStart">¡Arrancar!</button>
+    <p class="hub-intro">La velocidad para reaccionar y decidir también se mantiene afilada con la práctica.</p>
+    <div class="info-box">
+      <strong>¿Sabías que...?</strong>
+      Estudios con miles de participantes muestran que el tiempo de reacción tiende a alargarse de forma gradual con la edad, aunque la práctica regular ayuda a mantenerlo más afilado.
+      <span class="cite">Der &amp; Deary, 2006 — "Age and sex differences in reaction time in adulthood".</span>
     </div>
 
-    <div id="reflejosPlay" hidden>
-      <div class="round-counter" id="refRoundCounter"></div>
-      <div class="ref-feedback" id="refFeedback"></div>
-      <div class="ref-area" id="refArea">
-        <div class="game-status" id="refStatus" style="padding-top:2.2rem;">Esperá...</div>
+    <button class="game-card" data-exercise="ref-estrella">
+      <div class="game-icon gi-reflejos">⭐</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Estrella rápida</div>
+        <div class="game-card-desc">Tocá la estrella en cuanto aparece.</div>
+        <div class="game-card-best" id="best-ref-estrella">Sin jugar todavía</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
+
+    <button class="game-card" data-exercise="ref-elegir">
+      <div class="game-icon gi-reflejos">🎯</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Elegí rápido</div>
+        <div class="game-card-desc">Tocá solo el ícono correcto, dejá pasar el otro.</div>
+        <div class="game-card-best" id="best-ref-elegir">Sin jugar todavía</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
+  </section>
+
+  <!-- HUB: RAZONAMIENTO -->
+  <section class="screen" id="screen-hub-razonamiento" hidden>
+    <div class="hub-header">
+      <div class="game-icon gi-razonamiento">🧩</div>
+      <h2>Razonamiento</h2>
+    </div>
+    <p class="hub-intro">Resolver acertijos simples mantiene la cabeza despierta para los problemas del día a día.</p>
+    <div class="info-box">
+      <strong>¿Sabías que...?</strong>
+      El psicólogo Raymond Cattell diferenció entre la inteligencia "fluida" (resolver problemas nuevos) y la "cristalizada" (el conocimiento acumulado). Mientras una puede cambiar con los años, la otra suele mantenerse o incluso mejorar con la experiencia.
+      <span class="cite">Cattell, 1963 — "Theory of Fluid and Crystallized Intelligence".</span>
+    </div>
+
+    <button class="game-card" data-exercise="raz-patron">
+      <div class="game-icon gi-razonamiento">🧩</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Qué sigue</div>
+        <div class="game-card-desc">Descubrí qué ícono sigue en la secuencia.</div>
+        <div class="game-card-best" id="best-raz-patron">Sin jugar todavía</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
+
+    <button class="game-card" data-exercise="raz-orden">
+      <div class="game-icon gi-razonamiento">🌻</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Ordená por tamaño</div>
+        <div class="game-card-desc">Tocá las flores de la más chica a la más grande.</div>
+        <div class="game-card-best" id="best-raz-orden">Sin jugar todavía</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
+  </section>
+
+  <!-- EJERCICIO: MEMORIA - SECUENCIA -->
+  <section class="screen" id="screen-ex-mem-secuencia" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-memoria">✨</div>
+      <h2>Secuencia</h2>
+    </div>
+    <div id="mem-secuencia-intro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Vamos a iluminar algunos íconos, uno por uno. Mirá bien el orden y después tocalos en el mismo orden en que aparecieron. Este ejercicio entrena la memoria de corto plazo, la que usás para acordarte de algo que acabás de escuchar.
+      </div>
+      <button class="btn btn-ladrillo" id="mem-secuencia-start">¡Arrancar!</button>
+    </div>
+    <div id="mem-secuencia-play" hidden>
+      <div class="round-counter" id="ms-roundcounter"></div>
+      <div class="game-status" id="ms-status"></div>
+      <div class="mem-grid" id="ms-grid"></div>
+    </div>
+  </section>
+
+  <!-- EJERCICIO: MEMORIA - PAREJAS -->
+  <section class="screen" id="screen-ex-mem-parejas" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-memoria">🃏</div>
+      <h2>Parejas</h2>
+    </div>
+    <div id="mem-parejas-intro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Hay 12 cartas dadas vuelta, de a pares iguales. Tocá dos para verlas: si coinciden, ¡las encontraste! Este ejercicio entrena la memoria visual, la que te ayuda a recordar dónde dejaste las cosas.
+      </div>
+      <button class="btn btn-ladrillo" id="mem-parejas-start">¡Arrancar!</button>
+    </div>
+    <div id="mem-parejas-play" hidden>
+      <div class="round-counter" id="mp-roundcounter"></div>
+      <div class="memp-grid" id="mp-grid"></div>
+    </div>
+  </section>
+
+  <!-- EJERCICIO: ATENCION - DIFERENTE -->
+  <section class="screen" id="screen-ex-atn-diferente" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-atencion">🔎</div>
+      <h2>Encontrá el diferente</h2>
+    </div>
+    <div id="atn-diferente-intro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Todos los íconos son iguales, menos uno. Encontrá el diferente y tocalo lo más rápido que puedas. Este ejercicio entrena la atención visual, la que te ayuda a no pasar por alto los detalles.
+      </div>
+      <button class="btn btn-azul" id="atn-diferente-start">¡Arrancar!</button>
+    </div>
+    <div id="atn-diferente-play" hidden>
+      <div class="round-counter" id="ad-roundcounter"></div>
+      <div class="game-status" id="ad-status">Encontrá el diferente</div>
+      <div class="atn-grid" id="ad-grid"></div>
+    </div>
+  </section>
+
+  <!-- EJERCICIO: ATENCION - CONTAR -->
+  <section class="screen" id="screen-ex-atn-contar" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-atencion">🔢</div>
+      <h2>Contá los íconos</h2>
+    </div>
+    <div id="atn-contar-intro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Te vamos a preguntar cuántas veces aparece un ícono en la pantalla. Contá con cuidado antes de responder. Este ejercicio entrena la atención sostenida, la que usás para seguir el hilo en una charla larga.
+      </div>
+      <button class="btn btn-azul" id="atn-contar-start">¡Arrancar!</button>
+    </div>
+    <div id="atn-contar-play" hidden>
+      <div class="round-counter" id="ac-roundcounter"></div>
+      <div class="ac-question" id="ac-question"></div>
+      <div class="atn-grid" id="ac-grid"></div>
+      <div class="choice-row" id="ac-options" style="margin-top:1.2rem;"></div>
+    </div>
+  </section>
+
+  <!-- EJERCICIO: REFLEJOS - ESTRELLA -->
+  <section class="screen" id="screen-ex-ref-estrella" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-reflejos">⭐</div>
+      <h2>Estrella rápida</h2>
+    </div>
+    <div id="ref-estrella-intro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Va a aparecer una estrella ⭐ en algún lugar del recuadro. Tocala apenas la veas. Este ejercicio entrena tu tiempo de reacción, el mismo que usás para frenar a tiempo o atajar algo que se cae.
+      </div>
+      <button class="btn btn-ciruela" id="ref-estrella-start">¡Arrancar!</button>
+    </div>
+    <div id="ref-estrella-play" hidden>
+      <div class="round-counter" id="re-roundcounter"></div>
+      <div class="ref-feedback" id="re-feedback"></div>
+      <div class="ref-area" id="re-area">
+        <div class="game-status" style="padding-top:2.2rem;">Esperá...</div>
       </div>
     </div>
   </section>
 
-  <!-- RAZONAMIENTO -->
-  <section class="screen" id="screen-razonamiento" hidden>
+  <!-- EJERCICIO: REFLEJOS - ELEGI RAPIDO -->
+  <section class="screen" id="screen-ex-ref-elegir" hidden>
     <div class="game-header">
-      <div class="game-icon gi-razonamiento">🧩</div>
-      <h2>Razonamiento</h2>
+      <div class="game-icon gi-reflejos">🎯</div>
+      <h2>Elegí rápido</h2>
     </div>
-
-    <div id="razonamientoIntro">
+    <div id="ref-elegir-intro">
       <div class="instructions">
         <strong>Cómo se juega</strong>
-        Mirá la secuencia de íconos. Elegí, entre las tres opciones, cuál sigue.
+        Va a aparecer una estrella ⭐ o una luna 🌙 en algún lugar del recuadro. Tocá solo cuando sea la estrella, y dejá pasar la luna sin tocarla. Este ejercicio entrena la rapidez para decidir entre dos opciones.
       </div>
-      <button class="btn btn-verde" id="razonamientoStart">¡Arrancar!</button>
+      <button class="btn btn-ciruela" id="ref-elegir-start">¡Arrancar!</button>
     </div>
+    <div id="ref-elegir-play" hidden>
+      <div class="round-counter" id="rg-roundcounter"></div>
+      <div class="ref-feedback" id="rg-feedback"></div>
+      <div class="ref-area" id="rg-area">
+        <div class="game-status" style="padding-top:2.2rem;">Esperá...</div>
+      </div>
+    </div>
+  </section>
 
-    <div id="razonamientoPlay" hidden>
-      <div class="round-counter" id="razRoundCounter"></div>
-      <div class="raz-seq" id="razSeq"></div>
-      <div class="raz-options" id="razOptions"></div>
+  <!-- EJERCICIO: RAZONAMIENTO - PATRON -->
+  <section class="screen" id="screen-ex-raz-patron" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-razonamiento">🧩</div>
+      <h2>Qué sigue</h2>
     </div>
+    <div id="raz-patron-intro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Mirá la secuencia de íconos y elegí, entre las tres opciones, cuál sigue. Este ejercicio entrena el razonamiento lógico, el que usás para anticiparte y planificar.
+      </div>
+      <button class="btn btn-verde" id="raz-patron-start">¡Arrancar!</button>
+    </div>
+    <div id="raz-patron-play" hidden>
+      <div class="round-counter" id="rp-roundcounter"></div>
+      <div class="raz-seq" id="rp-seq"></div>
+      <div class="choice-row" id="rp-options"></div>
+    </div>
+  </section>
+
+  <!-- EJERCICIO: RAZONAMIENTO - ORDEN -->
+  <section class="screen" id="screen-ex-raz-orden" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-razonamiento">🌻</div>
+      <h2>Ordená por tamaño</h2>
+    </div>
+    <div id="raz-orden-intro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Vas a ver cuatro flores de distintos tamaños. Tocalas en orden, de la más chica a la más grande. Este ejercicio entrena la capacidad de organizar y clasificar, útil para ordenar tareas o prioridades.
+      </div>
+      <button class="btn btn-verde" id="raz-orden-start">¡Arrancar!</button>
+    </div>
+    <div id="raz-orden-play" hidden>
+      <div class="round-counter" id="ro-roundcounter"></div>
+      <div class="game-status" id="ro-status">Tocá del más chico al más grande</div>
+      <div class="size-row" id="ro-row"></div>
+    </div>
+  </section>
+
+  <!-- MI PROGRESO -->
+  <section class="screen" id="screen-progress" hidden>
+    <div class="hub-header">
+      <div class="game-icon" style="background:var(--dorado-bg);">📈</div>
+      <h2>Mi progreso</h2>
+    </div>
+    <p class="hub-intro">Acá podés ver cómo te fue evolucionando en cada ejercicio, sesión a sesión.</p>
+    <p class="progress-empty" id="progressEmpty">Todavía no jugaste ningún ejercicio. ¡Animate a probar el primero!</p>
+    <div id="progressList"></div>
   </section>
 
   <!-- RESULT -->
@@ -465,6 +758,7 @@ button:focus-visible, a:focus-visible, input:focus-visible{
       <div class="result-mark" id="resultMark">✨</div>
       <h2 class="result-title" id="resultTitle"></h2>
       <p class="result-message" id="resultMessage"></p>
+      <p class="result-benefit" id="resultBenefit"></p>
       <div class="result-best" id="resultBest"></div>
       <div class="result-actions">
         <button class="btn btn-verde" id="playAgainBtn">Jugar de nuevo</button>
@@ -549,10 +843,19 @@ var ICONS = ['🧉','⭐','🌻','🌙','🍪','🐦'];
 var SCREEN_PARENT = {
   'screen-home': null,
   'screen-welcome': null,
-  'screen-memoria': 'screen-home',
-  'screen-atencion': 'screen-home',
-  'screen-reflejos': 'screen-home',
-  'screen-razonamiento': 'screen-home',
+  'screen-hub-memoria': 'screen-home',
+  'screen-hub-atencion': 'screen-home',
+  'screen-hub-reflejos': 'screen-home',
+  'screen-hub-razonamiento': 'screen-home',
+  'screen-progress': 'screen-home',
+  'screen-ex-mem-secuencia': 'screen-hub-memoria',
+  'screen-ex-mem-parejas': 'screen-hub-memoria',
+  'screen-ex-atn-diferente': 'screen-hub-atencion',
+  'screen-ex-atn-contar': 'screen-hub-atencion',
+  'screen-ex-ref-estrella': 'screen-hub-reflejos',
+  'screen-ex-ref-elegir': 'screen-hub-reflejos',
+  'screen-ex-raz-patron': 'screen-hub-razonamiento',
+  'screen-ex-raz-orden': 'screen-hub-razonamiento',
   'screen-result': 'screen-home'
 };
 var currentScreen = null;
@@ -590,7 +893,6 @@ function renderHome(){
   var dateStr = new Intl.DateTimeFormat('es-UY', { weekday:'long', day:'numeric', month:'long' }).format(new Date());
   qs('#homeDate').textContent = capitalize(dateStr);
 
-  // streak
   var dates = getStore('vivaracha_playdates', []);
   var streakWrap = qs('#streakWrap');
   streakWrap.innerHTML = '';
@@ -613,19 +915,6 @@ function renderHome(){
       streakWrap.appendChild(chip3);
     }
   }
-
-  // best scores
-  var bm = getStore('vivaracha_best_memoria', null);
-  qs('#bestMemoria').textContent = bm ? ('Mejor: ' + bm + ' en fila') : 'Sin jugar todavía';
-
-  var ba = getStore('vivaracha_best_atencion', null);
-  qs('#bestAtencion').textContent = ba ? ('Mejor: ' + ba.toFixed(1) + 's de promedio') : 'Sin jugar todavía';
-
-  var br = getStore('vivaracha_best_reflejos', null);
-  qs('#bestReflejos').textContent = br ? ('Mejor: ' + br.toFixed(2) + 's de promedio') : 'Sin jugar todavía';
-
-  var bz = getStore('vivaracha_best_razonamiento', null);
-  qs('#bestRazonamiento').textContent = (bz !== null && bz !== undefined) ? ('Mejor: ' + bz + ' de 5') : 'Sin jugar todavía';
 }
 
 function computeStreak(dates){
@@ -649,13 +938,6 @@ function recordPlayToday(){
   }
 }
 
-qsa('.game-card').forEach(function(card){
-  card.addEventListener('click', function(){
-    var game = card.dataset.game;
-    openGame(game);
-  });
-});
-
 qs('#resetLink').addEventListener('click', function(){
   if(confirm('¿Borrar todo tu progreso guardado en este dispositivo?')){
     if(storageAvailable){ try{ localStorage.clear(); }catch(e){} }
@@ -664,58 +946,193 @@ qs('#resetLink').addEventListener('click', function(){
   }
 });
 
-function openGame(game){
-  if(game === 'memoria'){
-    qs('#memoriaPlay').hidden = true;
-    qs('#memoriaIntro').hidden = false;
-    showScreen('screen-memoria');
-  } else if(game === 'atencion'){
-    qs('#atencionPlay').hidden = true;
-    qs('#atencionIntro').hidden = false;
-    showScreen('screen-atencion');
-  } else if(game === 'reflejos'){
-    qs('#reflejosPlay').hidden = true;
-    qs('#reflejosIntro').hidden = false;
-    showScreen('screen-reflejos');
-  } else if(game === 'razonamiento'){
-    qs('#razonamientoPlay').hidden = true;
-    qs('#razonamientoIntro').hidden = false;
-    showScreen('screen-razonamiento');
-  }
+/* ===================== historial / evolucion ===================== */
+function pushHistory(exerciseKey, value){
+  var hist = getStore('vivaracha_hist_' + exerciseKey, []);
+  hist.push({ date: todayISO(), value: value });
+  if(hist.length > 20) hist = hist.slice(hist.length - 20);
+  setStore('vivaracha_hist_' + exerciseKey, hist);
+}
+function getHistory(exerciseKey){
+  return getStore('vivaracha_hist_' + exerciseKey, []);
+}
+
+var EXERCISE_META = {
+  'mem-secuencia':  { label:'Secuencia',            icon:'✨', higherIsBetter:true,  fmt:function(v){ return v + ' en fila'; } },
+  'mem-parejas':    { label:'Parejas',              icon:'🃏', higherIsBetter:false, fmt:function(v){ return v + ' intentos'; } },
+  'atn-diferente':  { label:'Encontrá el diferente',icon:'🔎', higherIsBetter:false, fmt:function(v){ return v.toFixed(1) + 's'; } },
+  'atn-contar':     { label:'Contá los íconos',     icon:'🔢', higherIsBetter:true,  fmt:function(v){ return v + '/4'; } },
+  'ref-estrella':   { label:'Estrella rápida',      icon:'⭐', higherIsBetter:false, fmt:function(v){ return v.toFixed(2) + 's'; } },
+  'ref-elegir':     { label:'Elegí rápido',         icon:'🎯', higherIsBetter:true,  fmt:function(v){ return v + '/8'; } },
+  'raz-patron':     { label:'Qué sigue',            icon:'🧩', higherIsBetter:true,  fmt:function(v){ return v + '/5'; } },
+  'raz-orden':      { label:'Ordená por tamaño',    icon:'🌻', higherIsBetter:true,  fmt:function(v){ return v + '/4'; } }
+};
+
+function renderProgress(){
+  var list = qs('#progressList');
+  list.innerHTML = '';
+  var any = false;
+
+  Object.keys(EXERCISE_META).forEach(function(key){
+    var hist = getHistory(key);
+    if(hist.length === 0) return;
+    any = true;
+    var meta = EXERCISE_META[key];
+
+    var card = document.createElement('div');
+    card.className = 'progress-card';
+
+    var head = document.createElement('div');
+    head.className = 'progress-head';
+    var iconSpan = document.createElement('span');
+    iconSpan.className = 'progress-icon';
+    iconSpan.textContent = meta.icon;
+    var nameSpan = document.createElement('span');
+    nameSpan.textContent = meta.label;
+    head.appendChild(iconSpan);
+    head.appendChild(nameSpan);
+    card.appendChild(head);
+
+    var recent = hist.slice(-8);
+    var values = recent.map(function(h){ return h.value; });
+    var min = Math.min.apply(null, values);
+    var max = Math.max.apply(null, values);
+
+    var bars = document.createElement('div');
+    bars.className = 'progress-bars';
+    recent.forEach(function(h){
+      var bar = document.createElement('div');
+      bar.className = 'progress-bar';
+      var pct;
+      if(max === min){
+        pct = 60;
+      } else if(meta.higherIsBetter){
+        pct = ((h.value - min) / (max - min)) * 80 + 20;
+      } else {
+        pct = ((max - h.value) / (max - min)) * 80 + 20;
+      }
+      bar.style.height = pct + '%';
+      bars.appendChild(bar);
+    });
+    card.appendChild(bars);
+
+    var allValues = hist.map(function(h){ return h.value; });
+    var first = hist[0].value;
+    var bestAll = meta.higherIsBetter ? Math.max.apply(null, allValues) : Math.min.apply(null, allValues);
+    var improved = meta.higherIsBetter ? bestAll > first : bestAll < first;
+
+    var compare = document.createElement('div');
+    compare.className = 'progress-compare';
+    compare.textContent = 'Primera vez: ' + meta.fmt(first) + ' → Mejor marca: ' + meta.fmt(bestAll) + (improved ? ' · ¡mejoraste!' : '');
+    card.appendChild(compare);
+
+    list.appendChild(card);
+  });
+
+  qs('#progressEmpty').hidden = any;
+  list.hidden = !any;
+}
+
+qsa('.game-card[data-action]').forEach(function(card){
+  card.addEventListener('click', function(){
+    if(card.dataset.action === 'progress'){
+      renderProgress();
+      showScreen('screen-progress');
+    }
+  });
+});
+
+/* ===================== hubs ===================== */
+var HUB_EXERCISES = {
+  'memoria': ['mem-secuencia','mem-parejas'],
+  'atencion': ['atn-diferente','atn-contar'],
+  'reflejos': ['ref-estrella','ref-elegir'],
+  'razonamiento': ['raz-patron','raz-orden']
+};
+
+function formatBest(key){
+  var v;
+  if(key === 'mem-secuencia'){ v = getStore('vivaracha_best_mem_secuencia', null); return v ? ('Mejor: ' + v + ' en fila') : 'Sin jugar todavía'; }
+  if(key === 'mem-parejas'){ v = getStore('vivaracha_best_mem_parejas', null); return v ? ('Mejor: ' + v + ' intentos') : 'Sin jugar todavía'; }
+  if(key === 'atn-diferente'){ v = getStore('vivaracha_best_atn_diferente', null); return v ? ('Mejor: ' + v.toFixed(1) + 's de promedio') : 'Sin jugar todavía'; }
+  if(key === 'atn-contar'){ v = getStore('vivaracha_best_atn_contar', null); return (v!==null) ? ('Mejor: ' + v + '/4') : 'Sin jugar todavía'; }
+  if(key === 'ref-estrella'){ v = getStore('vivaracha_best_ref_estrella', null); return v ? ('Mejor: ' + v.toFixed(2) + 's de promedio') : 'Sin jugar todavía'; }
+  if(key === 'ref-elegir'){ v = getStore('vivaracha_best_ref_elegir', null); return (v!==null) ? ('Mejor: ' + v + '/8') : 'Sin jugar todavía'; }
+  if(key === 'raz-patron'){ v = getStore('vivaracha_best_raz_patron', null); return (v!==null) ? ('Mejor: ' + v + '/5') : 'Sin jugar todavía'; }
+  if(key === 'raz-orden'){ v = getStore('vivaracha_best_raz_orden', null); return (v!==null) ? ('Mejor: ' + v + '/4') : 'Sin jugar todavía'; }
+  return '';
+}
+
+function openHub(cat){
+  var keys = HUB_EXERCISES[cat] || [];
+  keys.forEach(function(key){
+    var el = document.getElementById('best-' + key);
+    if(el) el.textContent = formatBest(key);
+  });
+  showScreen('screen-hub-' + cat);
+}
+
+qsa('.game-card[data-cat]').forEach(function(card){
+  card.addEventListener('click', function(){ openHub(card.dataset.cat); });
+});
+
+qsa('.game-card[data-exercise]').forEach(function(card){
+  card.addEventListener('click', function(){ openExercise(card.dataset.exercise); });
+});
+
+function openExercise(key){
+  var introEl = document.getElementById(key + '-intro');
+  var playEl = document.getElementById(key + '-play');
+  if(playEl) playEl.hidden = true;
+  if(introEl) introEl.hidden = false;
+  showScreen('screen-ex-' + key);
 }
 
 /* ===================== result screen ===================== */
-var lastGame = null;
+var lastExerciseKey = null;
+
+var BENEFIT_BY_CAT = {
+  'mem-secuencia': 'Practicar seguido ayuda a que cueste menos acordarte de las cosas en el día a día.',
+  'mem-parejas': 'Practicar seguido ayuda a que cueste menos acordarte de las cosas en el día a día.',
+  'atn-diferente': 'Con la práctica vas a notar que te distraés menos y prestás más atención a los detalles.',
+  'atn-contar': 'Con la práctica vas a notar que te distraés menos y prestás más atención a los detalles.',
+  'ref-estrella': 'Cada práctica suma para mantener reflejos rápidos y decisiones seguras.',
+  'ref-elegir': 'Cada práctica suma para mantener reflejos rápidos y decisiones seguras.',
+  'raz-patron': 'Seguir practicando ayuda a mantener la cabeza ágil para resolver problemas.',
+  'raz-orden': 'Seguir practicando ayuda a mantener la cabeza ágil para resolver problemas.'
+};
 
 function showResult(opts){
-  lastGame = opts.game;
+  lastExerciseKey = opts.exerciseKey;
   qs('#resultMark').textContent = opts.mark || '✨';
   qs('#resultTitle').textContent = opts.title;
   qs('#resultMessage').textContent = opts.message;
+  qs('#resultBenefit').textContent = BENEFIT_BY_CAT[opts.exerciseKey] || '';
   qs('#resultBest').textContent = opts.best || '';
   qs('#resultBest').style.display = opts.best ? 'inline-block' : 'none';
+  SCREEN_PARENT['screen-result'] = opts.hub || 'screen-home';
   recordPlayToday();
   showScreen('screen-result');
 }
 
 qs('#playAgainBtn').addEventListener('click', function(){
-  if(lastGame) openGame(lastGame);
+  if(lastExerciseKey) openExercise(lastExerciseKey);
 });
 qs('#homeFromResultBtn').addEventListener('click', function(){
   goHome();
 });
 
-/* ===================== MEMORIA ===================== */
+/* ===================== MEMORIA: SECUENCIA ===================== */
 var mem = { cellIcons:[], seq:[], inputIndex:0, level:3, rounds:0, maxRounds:6, lastSuccessLevel:0 };
 
-qs('#memoriaStart').addEventListener('click', startMemoria);
+qs('#mem-secuencia-start').addEventListener('click', startMemSecuencia);
 
-function startMemoria(){
+function startMemSecuencia(){
   mem.cellIcons = shuffle(ICONS).slice(0,6);
   mem.level = 3;
   mem.rounds = 0;
   mem.lastSuccessLevel = 0;
-  var grid = qs('#memGrid');
+  var grid = qs('#ms-grid');
   grid.innerHTML = '';
   mem.cellIcons.forEach(function(icon, i){
     var btn = document.createElement('button');
@@ -730,8 +1147,8 @@ function startMemoria(){
     if(!btn || btn.disabled) return;
     handleMemClick(parseInt(btn.dataset.index,10), btn);
   };
-  qs('#memoriaIntro').hidden = true;
-  qs('#memoriaPlay').hidden = false;
+  qs('#mem-secuencia-intro').hidden = true;
+  qs('#mem-secuencia-play').hidden = false;
   nextMemRound();
 }
 
@@ -739,7 +1156,7 @@ function nextMemRound(){
   mem.seq = [];
   for(var i=0;i<mem.level;i++){ mem.seq.push(randInt(0,5)); }
   mem.inputIndex = 0;
-  qs('#memRoundCounter').textContent = 'Ronda ' + (mem.rounds+1) + ' de ' + mem.maxRounds;
+  qs('#ms-roundcounter').textContent = 'Ronda ' + (mem.rounds+1) + ' de ' + mem.maxRounds;
   playMemSequence(mem.seq);
 }
 
@@ -748,14 +1165,14 @@ function setMemCellsDisabled(disabled){
 }
 
 function playMemSequence(seq){
-  qs('#memStatus').textContent = 'Mirá bien...';
+  qs('#ms-status').textContent = 'Mirá bien...';
   setMemCellsDisabled(true);
   setTimeout(function(){ showMemStep(seq, 0); }, 500);
 }
 
 function showMemStep(seq, i){
   if(i >= seq.length){
-    qs('#memStatus').textContent = 'Tu turno: tocá en el mismo orden';
+    qs('#ms-status').textContent = 'Tu turno: tocá en el mismo orden';
     setMemCellsDisabled(false);
     return;
   }
@@ -775,12 +1192,12 @@ function handleMemClick(index, btn){
     if(mem.inputIndex === mem.seq.length){
       mem.rounds++;
       mem.lastSuccessLevel = mem.level;
-      var best = getStore('vivaracha_best_memoria', null);
-      if(!best || mem.level > best) setStore('vivaracha_best_memoria', mem.level);
+      var best = getStore('vivaracha_best_mem_secuencia', null);
+      if(!best || mem.level > best) setStore('vivaracha_best_mem_secuencia', mem.level);
       if(mem.rounds >= mem.maxRounds){
-        finishMemoria(true);
+        finishMemSecuencia(true);
       } else {
-        qs('#memStatus').textContent = '¡Muy bien!';
+        qs('#ms-status').textContent = '¡Muy bien!';
         setMemCellsDisabled(true);
         mem.level = Math.min(mem.level + 1, 8);
         setTimeout(nextMemRound, 900);
@@ -789,13 +1206,14 @@ function handleMemClick(index, btn){
   } else {
     btn.classList.add('wrong');
     setMemCellsDisabled(true);
-    qs('#memStatus').textContent = '¡Casi! Vamos a ver cómo quedó.';
-    setTimeout(function(){ finishMemoria(false); }, 900);
+    qs('#ms-status').textContent = '¡Casi! Vamos a ver cómo quedó.';
+    setTimeout(function(){ finishMemSecuencia(false); }, 900);
   }
 }
 
-function finishMemoria(completedAll){
-  var bestLevel = getStore('vivaracha_best_memoria', null);
+function finishMemSecuencia(completedAll){
+  pushHistory('mem-secuencia', mem.lastSuccessLevel);
+  var bestLevel = getStore('vivaracha_best_mem_secuencia', null);
   var msg;
   if(completedAll){
     msg = '¡Llegaste hasta el final! Recordaste secuencias de hasta ' + mem.lastSuccessLevel + ' íconos.';
@@ -805,7 +1223,8 @@ function finishMemoria(completedAll){
     msg = 'Esta vez no llegaste a completar la primera ronda. ¡Probemos de nuevo, seguro te sale!';
   }
   showResult({
-    game:'memoria',
+    exerciseKey:'mem-secuencia',
+    hub:'screen-hub-memoria',
     mark:'🧉',
     title: completedAll ? '¡Memoria de elefante!' : '¡Buen intento!',
     message: msg,
@@ -813,23 +1232,114 @@ function finishMemoria(completedAll){
   });
 }
 
-/* ===================== ATENCION ===================== */
+/* ===================== MEMORIA: PAREJAS ===================== */
+var memp = { cards:[], flipped:[], matchedCount:0, attempts:0, lock:false, totalPairs:6 };
+
+qs('#mem-parejas-start').addEventListener('click', startMemParejas);
+
+function startMemParejas(){
+  var pairIcons = ICONS.concat(ICONS);
+  memp.cards = shuffle(pairIcons).map(function(icon){ return { icon:icon, matched:false }; });
+  memp.flipped = [];
+  memp.matchedCount = 0;
+  memp.attempts = 0;
+  memp.lock = false;
+
+  var grid = qs('#mp-grid');
+  grid.innerHTML = '';
+  memp.cards.forEach(function(c, i){
+    var btn = document.createElement('button');
+    btn.className = 'memp-card';
+    btn.dataset.index = i;
+    grid.appendChild(btn);
+  });
+  grid.onclick = function(e){
+    var btn = closestByClass(e.target, 'memp-card');
+    if(!btn) return;
+    handleMempClick(parseInt(btn.dataset.index,10), btn);
+  };
+  updateMpCounter();
+  qs('#mem-parejas-intro').hidden = true;
+  qs('#mem-parejas-play').hidden = false;
+}
+
+function updateMpCounter(){
+  qs('#mp-roundcounter').textContent = 'Parejas encontradas: ' + memp.matchedCount + ' de ' + memp.totalPairs + ' · Intentos: ' + memp.attempts;
+}
+
+function handleMempClick(index, btn){
+  if(memp.lock) return;
+  if(memp.cards[index].matched) return;
+  if(memp.flipped.indexOf(index) !== -1) return;
+
+  btn.textContent = memp.cards[index].icon;
+  memp.flipped.push(index);
+
+  if(memp.flipped.length === 1){
+    return;
+  }
+
+  memp.attempts++;
+  memp.lock = true;
+  var i1 = memp.flipped[0];
+  var i2 = memp.flipped[1];
+  var btn1 = qs('.memp-card[data-index="'+i1+'"]');
+  var btn2 = qs('.memp-card[data-index="'+i2+'"]');
+
+  if(memp.cards[i1].icon === memp.cards[i2].icon){
+    memp.cards[i1].matched = true;
+    memp.cards[i2].matched = true;
+    btn1.classList.add('matched');
+    btn2.classList.add('matched');
+    memp.matchedCount++;
+    memp.flipped = [];
+    memp.lock = false;
+    updateMpCounter();
+    if(memp.matchedCount >= memp.totalPairs){
+      setTimeout(finishMemParejas, 500);
+    }
+  } else {
+    updateMpCounter();
+    setTimeout(function(){
+      btn1.textContent = '';
+      btn2.textContent = '';
+      memp.flipped = [];
+      memp.lock = false;
+    }, 700);
+  }
+}
+
+function finishMemParejas(){
+  pushHistory('mem-parejas', memp.attempts);
+  var best = getStore('vivaracha_best_mem_parejas', null);
+  if(!best || memp.attempts < best) setStore('vivaracha_best_mem_parejas', memp.attempts);
+  showResult({
+    exerciseKey:'mem-parejas',
+    hub:'screen-hub-memoria',
+    mark:'🃏',
+    title:'¡Las encontraste todas!',
+    message:'Completaste las 6 parejas en ' + memp.attempts + ' intentos.',
+    best: best ? ('Tu mejor marca: ' + Math.min(best, memp.attempts) + ' intentos') : ('Tu mejor marca: ' + memp.attempts + ' intentos')
+  });
+}
+
+/* ===================== ATENCION: ENCONTRA EL DIFERENTE ===================== */
 var atn = { round:0, maxRounds:5, sizes:[9,12,12,16,16], times:[], oddIndex:0, startTime:0 };
 
-qs('#atencionStart').addEventListener('click', startAtencion);
+qs('#atn-diferente-start').addEventListener('click', startAtnDiferente);
 
-function startAtencion(){
+function startAtnDiferente(){
   atn.round = 0;
   atn.times = [];
-  qs('#atencionIntro').hidden = true;
-  qs('#atencionPlay').hidden = false;
+  qs('#atn-diferente-intro').hidden = true;
+  qs('#atn-diferente-play').hidden = false;
   nextAtnRound();
 }
 
 function nextAtnRound(){
   var n = atn.sizes[atn.round];
   var cols = Math.ceil(Math.sqrt(n));
-  var grid = qs('#atnGrid');
+  var grid = qs('#ad-grid');
   grid.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
   grid.innerHTML = '';
 
@@ -845,8 +1355,8 @@ function nextAtnRound(){
     btn.dataset.index = i;
     grid.appendChild(btn);
   }
-  qs('#atnRoundCounter').textContent = 'Ronda ' + (atn.round+1) + ' de ' + atn.maxRounds;
-  qs('#atnStatus').textContent = 'Encontrá el diferente';
+  qs('#ad-roundcounter').textContent = 'Ronda ' + (atn.round+1) + ' de ' + atn.maxRounds;
+  qs('#ad-status').textContent = 'Encontrá el diferente';
   atn.startTime = performance.now();
 
   grid.onclick = function(e){
@@ -858,7 +1368,7 @@ function nextAtnRound(){
       atn.times.push(elapsed);
       atn.round++;
       if(atn.round >= atn.maxRounds){
-        finishAtencion();
+        finishAtnDiferente();
       } else {
         nextAtnRound();
       }
@@ -869,12 +1379,14 @@ function nextAtnRound(){
   };
 }
 
-function finishAtencion(){
+function finishAtnDiferente(){
   var avg = atn.times.reduce(function(a,b){return a+b;},0) / atn.times.length;
-  var best = getStore('vivaracha_best_atencion', null);
-  if(!best || avg < best) setStore('vivaracha_best_atencion', avg);
+  pushHistory('atn-diferente', avg);
+  var best = getStore('vivaracha_best_atn_diferente', null);
+  if(!best || avg < best) setStore('vivaracha_best_atn_diferente', avg);
   showResult({
-    game:'atencion',
+    exerciseKey:'atn-diferente',
+    hub:'screen-hub-atencion',
     mark:'🔍',
     title:'¡Buen ojo!',
     message:'Encontraste las diferencias en un promedio de ' + avg.toFixed(1) + ' segundos.',
@@ -882,28 +1394,126 @@ function finishAtencion(){
   });
 }
 
-/* ===================== REFLEJOS ===================== */
+/* ===================== ATENCION: CONTAR ===================== */
+var atc = { round:0, maxRounds:4, correct:0 };
+
+qs('#atn-contar-start').addEventListener('click', startAtnContar);
+
+function startAtnContar(){
+  atc.round = 0;
+  atc.correct = 0;
+  qs('#atn-contar-intro').hidden = true;
+  qs('#atn-contar-play').hidden = false;
+  nextAtcRound();
+}
+
+function nextAtcRound(){
+  var n = 13;
+  var target = ICONS[randInt(0, ICONS.length-1)];
+  var count = randInt(3,6);
+  var others = ICONS.filter(function(ic){ return ic !== target; });
+
+  var cells = [];
+  for(var i=0;i<count;i++){ cells.push(target); }
+  for(var j=cells.length;j<n;j++){ cells.push(others[randInt(0,others.length-1)]); }
+  cells = shuffle(cells);
+
+  var cols = Math.ceil(Math.sqrt(n));
+  var grid = qs('#ac-grid');
+  grid.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
+  grid.innerHTML = '';
+  cells.forEach(function(icon){
+    var cell = document.createElement('div');
+    cell.className = 'atn-cell';
+    cell.textContent = icon;
+    grid.appendChild(cell);
+  });
+
+  qs('#ac-roundcounter').textContent = 'Ronda ' + (atc.round+1) + ' de ' + atc.maxRounds;
+  qs('#ac-question').textContent = '¿Cuántas veces ves ' + target + ' en la pantalla?';
+
+  var distractors = [];
+  var d1 = count - 1; var d2 = count + 1;
+  if(d1 >= 1) distractors.push(d1);
+  distractors.push(d2);
+  if(distractors.length < 2) distractors.push(count + 2);
+  var options = shuffle([count].concat(distractors.slice(0,2)));
+
+  var optEl = qs('#ac-options');
+  optEl.innerHTML = '';
+  options.forEach(function(opt){
+    var btn = document.createElement('button');
+    btn.className = 'choice-opt';
+    btn.textContent = opt;
+    btn.dataset.value = opt;
+    optEl.appendChild(btn);
+  });
+
+  optEl.onclick = function(e){
+    var btn = closestByClass(e.target, 'choice-opt');
+    if(!btn) return;
+    handleAtcClick(btn, count, optEl);
+  };
+}
+
+function handleAtcClick(btn, correctCount, optEl){
+  optEl.onclick = null;
+  var isCorrect = parseInt(btn.dataset.value,10) === correctCount;
+  if(isCorrect){
+    btn.classList.add('correct');
+    atc.correct++;
+  } else {
+    btn.classList.add('wrong');
+    qsa('.choice-opt', optEl).forEach(function(b){
+      if(parseInt(b.dataset.value,10) === correctCount) b.classList.add('correct');
+    });
+  }
+  setTimeout(function(){
+    atc.round++;
+    if(atc.round >= atc.maxRounds){
+      finishAtnContar();
+    } else {
+      nextAtcRound();
+    }
+  }, 800);
+}
+
+function finishAtnContar(){
+  pushHistory('atn-contar', atc.correct);
+  var best = getStore('vivaracha_best_atn_contar', null);
+  if(best === null || atc.correct > best) setStore('vivaracha_best_atn_contar', atc.correct);
+  showResult({
+    exerciseKey:'atn-contar',
+    hub:'screen-hub-atencion',
+    mark:'🔢',
+    title: atc.correct >= 3 ? '¡Qué buena atención!' : '¡Bien jugado!',
+    message:'Contaste bien ' + atc.correct + ' de ' + atc.maxRounds + ' veces.',
+    best: (best !== null) ? ('Tu mejor marca: ' + Math.max(best, atc.correct) + '/' + atc.maxRounds) : ('Tu mejor marca: ' + atc.correct + '/' + atc.maxRounds)
+  });
+}
+
+/* ===================== REFLEJOS: ESTRELLA RAPIDA ===================== */
 var ref = { round:0, maxRounds:6, times:[], appearTime:0 };
 
-qs('#reflejosStart').addEventListener('click', startReflejos);
+qs('#ref-estrella-start').addEventListener('click', startRefEstrella);
 
-function startReflejos(){
+function startRefEstrella(){
   ref.round = 0;
   ref.times = [];
-  qs('#reflejosIntro').hidden = true;
-  qs('#reflejosPlay').hidden = false;
-  qs('#refFeedback').textContent = '';
+  qs('#ref-estrella-intro').hidden = true;
+  qs('#ref-estrella-play').hidden = false;
+  qs('#re-feedback').textContent = '';
   nextRefRound();
 }
 
 function nextRefRound(){
-  qs('#refRoundCounter').textContent = 'Ronda ' + (ref.round+1) + ' de ' + ref.maxRounds;
-  var area = qs('#refArea');
-  area.innerHTML = '<div class="game-status" id="refStatus" style="padding-top:2.2rem;">Esperá...</div>';
+  qs('#re-roundcounter').textContent = 'Ronda ' + (ref.round+1) + ' de ' + ref.maxRounds;
+  var area = qs('#re-area');
+  area.innerHTML = '<div class="game-status" style="padding-top:2.2rem;">Esperá...</div>';
 
   var wait = randInt(700, 2200);
   setTimeout(function(){
-    if(currentScreen !== 'screen-reflejos') return;
+    if(currentScreen !== 'screen-ex-ref-estrella') return;
     area.innerHTML = '';
     var btn = document.createElement('button');
     btn.className = 'ref-target';
@@ -917,11 +1527,11 @@ function nextRefRound(){
     btn.addEventListener('click', function(){
       var elapsed = (performance.now() - ref.appearTime) / 1000;
       ref.times.push(elapsed);
-      qs('#refFeedback').textContent = elapsed.toFixed(2) + 's ¡' + (elapsed < 0.8 ? 'Excelente!' : 'Bien!');
+      qs('#re-feedback').textContent = elapsed.toFixed(2) + 's ¡' + (elapsed < 0.8 ? 'Excelente!' : 'Bien!');
       ref.round++;
       area.innerHTML = '';
       if(ref.round >= ref.maxRounds){
-        setTimeout(finishReflejos, 500);
+        setTimeout(finishRefEstrella, 500);
       } else {
         setTimeout(nextRefRound, 500);
       }
@@ -929,12 +1539,14 @@ function nextRefRound(){
   }, wait);
 }
 
-function finishReflejos(){
+function finishRefEstrella(){
   var avg = ref.times.reduce(function(a,b){return a+b;},0) / ref.times.length;
-  var best = getStore('vivaracha_best_reflejos', null);
-  if(!best || avg < best) setStore('vivaracha_best_reflejos', avg);
+  pushHistory('ref-estrella', avg);
+  var best = getStore('vivaracha_best_ref_estrella', null);
+  if(!best || avg < best) setStore('vivaracha_best_ref_estrella', avg);
   showResult({
-    game:'reflejos',
+    exerciseKey:'ref-estrella',
+    hub:'screen-hub-reflejos',
     mark:'⚡',
     title:'¡Reflejos felinos!',
     message:'Tu tiempo de reacción promedio fue ' + avg.toFixed(2) + ' segundos.',
@@ -942,7 +1554,93 @@ function finishReflejos(){
   });
 }
 
-/* ===================== RAZONAMIENTO ===================== */
+/* ===================== REFLEJOS: ELEGI RAPIDO (go/no-go) ===================== */
+var refg = { trial:0, maxTrials:8, score:0 };
+
+qs('#ref-elegir-start').addEventListener('click', startRefElegir);
+
+function startRefElegir(){
+  refg.trial = 0;
+  refg.score = 0;
+  qs('#ref-elegir-intro').hidden = true;
+  qs('#ref-elegir-play').hidden = false;
+  qs('#rg-feedback').textContent = '';
+  nextRefgTrial();
+}
+
+function nextRefgTrial(){
+  qs('#rg-roundcounter').textContent = 'Ronda ' + (refg.trial+1) + ' de ' + refg.maxTrials;
+  var area = qs('#rg-area');
+  area.innerHTML = '<div class="game-status" style="padding-top:2.2rem;">Esperá...</div>';
+
+  var wait = randInt(700, 1900);
+  setTimeout(function(){
+    if(currentScreen !== 'screen-ex-ref-elegir') return;
+    area.innerHTML = '';
+    var isTarget = Math.random() < 0.65;
+    var btn = document.createElement('button');
+    btn.className = 'ref-target' + (isTarget ? '' : ' distractor');
+    btn.textContent = isTarget ? '⭐' : '🌙';
+    var maxLeft = area.clientWidth - 80;
+    var maxTop = area.clientHeight - 80;
+    btn.style.left = randInt(6, Math.max(maxLeft,6)) + 'px';
+    btn.style.top = randInt(6, Math.max(maxTop,6)) + 'px';
+    area.appendChild(btn);
+
+    var resolved = false;
+    var autoTimer = setTimeout(function(){
+      if(resolved) return;
+      resolved = true;
+      if(!isTarget){
+        refg.score++;
+        qs('#rg-feedback').textContent = '¡Bien, la dejaste pasar!';
+      } else {
+        qs('#rg-feedback').textContent = 'Se te escapó esa estrella.';
+      }
+      area.innerHTML = '';
+      advanceRefg();
+    }, 1100);
+
+    btn.addEventListener('click', function(){
+      if(resolved) return;
+      resolved = true;
+      clearTimeout(autoTimer);
+      if(isTarget){
+        refg.score++;
+        qs('#rg-feedback').textContent = '¡Bien ahí!';
+      } else {
+        qs('#rg-feedback').textContent = 'Esa era para dejar pasar.';
+      }
+      area.innerHTML = '';
+      advanceRefg();
+    });
+  }, wait);
+}
+
+function advanceRefg(){
+  refg.trial++;
+  if(refg.trial >= refg.maxTrials){
+    setTimeout(finishRefElegir, 400);
+  } else {
+    setTimeout(nextRefgTrial, 500);
+  }
+}
+
+function finishRefElegir(){
+  pushHistory('ref-elegir', refg.score);
+  var best = getStore('vivaracha_best_ref_elegir', null);
+  if(best === null || refg.score > best) setStore('vivaracha_best_ref_elegir', refg.score);
+  showResult({
+    exerciseKey:'ref-elegir',
+    hub:'screen-hub-reflejos',
+    mark:'🎯',
+    title: refg.score >= 6 ? '¡Decisiones rápidas y seguras!' : '¡Bien jugado!',
+    message:'Elegiste bien ' + refg.score + ' de ' + refg.maxTrials + ' veces.',
+    best: (best !== null) ? ('Tu mejor marca: ' + Math.max(best, refg.score) + '/' + refg.maxTrials) : ('Tu mejor marca: ' + refg.score + '/' + refg.maxTrials)
+  });
+}
+
+/* ===================== RAZONAMIENTO: QUE SIGUE ===================== */
 var RAZ_BANK = [
   { seq:['🧉','⭐','🧉','⭐'], answer:'🧉', distractors:['⭐','🌙'] },
   { seq:['🌻','🌻','🌙','🌻'], answer:'🌻', distractors:['🌙','🐦'] },
@@ -956,23 +1654,23 @@ var RAZ_BANK = [
 
 var raz = { puzzles:[], round:0, maxRounds:5, correct:0, answeredFirstTry:false };
 
-qs('#razonamientoStart').addEventListener('click', startRazonamiento);
+qs('#raz-patron-start').addEventListener('click', startRazPatron);
 
-function startRazonamiento(){
+function startRazPatron(){
   raz.puzzles = shuffle(RAZ_BANK).slice(0,5);
   raz.round = 0;
   raz.correct = 0;
-  qs('#razonamientoIntro').hidden = true;
-  qs('#razonamientoPlay').hidden = false;
+  qs('#raz-patron-intro').hidden = true;
+  qs('#raz-patron-play').hidden = false;
   nextRazRound();
 }
 
 function nextRazRound(){
   raz.answeredFirstTry = true;
   var puzzle = raz.puzzles[raz.round];
-  qs('#razRoundCounter').textContent = 'Ronda ' + (raz.round+1) + ' de ' + raz.maxRounds;
+  qs('#rp-roundcounter').textContent = 'Ronda ' + (raz.round+1) + ' de ' + raz.maxRounds;
 
-  var seqEl = qs('#razSeq');
+  var seqEl = qs('#rp-seq');
   seqEl.innerHTML = '';
   puzzle.seq.forEach(function(icon){
     var box = document.createElement('div');
@@ -986,26 +1684,25 @@ function nextRazRound(){
   seqEl.appendChild(unknownBox);
 
   var options = shuffle([puzzle.answer].concat(puzzle.distractors));
-  var optEl = qs('#razOptions');
+  var optEl = qs('#rp-options');
   optEl.innerHTML = '';
   options.forEach(function(opt){
     var btn = document.createElement('button');
-    btn.className = 'raz-opt';
+    btn.className = 'choice-opt';
     btn.textContent = opt;
     btn.dataset.value = opt;
     optEl.appendChild(btn);
   });
 
   optEl.onclick = function(e){
-    var btn = closestByClass(e.target, 'raz-opt');
+    var btn = closestByClass(e.target, 'choice-opt');
     if(!btn) return;
     handleRazClick(btn, puzzle, optEl);
   };
 }
 
 function handleRazClick(btn, puzzle, optEl){
-  qsa('.raz-opt', optEl).forEach(function(b){ b.onclick = null; });
-  optEl.style.pointerEvents = 'none';
+  optEl.onclick = null;
   var isCorrect = btn.dataset.value === puzzle.answer;
   if(isCorrect){
     btn.classList.add('correct');
@@ -1014,32 +1711,117 @@ function handleRazClick(btn, puzzle, optEl){
     btn.classList.add('wrong');
     raz.answeredFirstTry = false;
     var correctBtn = null;
-    var razOpts = qsa('.raz-opt', optEl);
-    for(var oi=0; oi<razOpts.length; oi++){
-      if(razOpts[oi].dataset.value === puzzle.answer){ correctBtn = razOpts[oi]; break; }
+    var opts = qsa('.choice-opt', optEl);
+    for(var oi=0; oi<opts.length; oi++){
+      if(opts[oi].dataset.value === puzzle.answer){ correctBtn = opts[oi]; break; }
     }
     if(correctBtn) correctBtn.classList.add('correct');
   }
   setTimeout(function(){
-    optEl.style.pointerEvents = '';
     raz.round++;
     if(raz.round >= raz.maxRounds){
-      finishRazonamiento();
+      finishRazPatron();
     } else {
       nextRazRound();
     }
   }, 800);
 }
 
-function finishRazonamiento(){
-  var best = getStore('vivaracha_best_razonamiento', null);
-  if(best === null || raz.correct > best) setStore('vivaracha_best_razonamiento', raz.correct);
+function finishRazPatron(){
+  pushHistory('raz-patron', raz.correct);
+  var best = getStore('vivaracha_best_raz_patron', null);
+  if(best === null || raz.correct > best) setStore('vivaracha_best_raz_patron', raz.correct);
   showResult({
-    game:'razonamiento',
+    exerciseKey:'raz-patron',
+    hub:'screen-hub-razonamiento',
     mark:'🧩',
     title: raz.correct >= 4 ? '¡Mente afilada!' : '¡Bien jugado!',
     message:'Resolviste ' + raz.correct + ' de ' + raz.maxRounds + ' patrones a la primera.',
     best: (best !== null) ? ('Tu mejor marca: ' + Math.max(best, raz.correct) + '/' + raz.maxRounds) : ('Tu mejor marca: ' + raz.correct + '/' + raz.maxRounds)
+  });
+}
+
+/* ===================== RAZONAMIENTO: ORDENA POR TAMANO ===================== */
+var ro = { round:0, maxRounds:4, correct:0, expectedRank:1, locked:false };
+var RO_SIZES = ['1.4rem','2.0rem','2.7rem','3.6rem'];
+
+qs('#raz-orden-start').addEventListener('click', startRazOrden);
+
+function startRazOrden(){
+  ro.round = 0;
+  ro.correct = 0;
+  qs('#raz-orden-intro').hidden = true;
+  qs('#raz-orden-play').hidden = false;
+  nextRoRound();
+}
+
+function nextRoRound(){
+  ro.expectedRank = 1;
+  ro.locked = false;
+  qs('#ro-roundcounter').textContent = 'Ronda ' + (ro.round+1) + ' de ' + ro.maxRounds;
+  qs('#ro-status').textContent = 'Tocá del más chico al más grande';
+
+  var ranks = [1,2,3,4];
+  var order = shuffle(ranks);
+  var row = qs('#ro-row');
+  row.innerHTML = '';
+  order.forEach(function(rank){
+    var box = document.createElement('button');
+    box.className = 'size-box';
+    box.dataset.rank = rank;
+    var span = document.createElement('span');
+    span.style.fontSize = RO_SIZES[rank-1];
+    span.textContent = '🌻';
+    box.appendChild(span);
+    row.appendChild(box);
+  });
+
+  row.onclick = function(e){
+    var box = closestByClass(e.target, 'size-box');
+    if(!box || ro.locked) return;
+    handleRoClick(box);
+  };
+}
+
+function handleRoClick(box){
+  var rank = parseInt(box.dataset.rank,10);
+  if(rank === ro.expectedRank){
+    box.classList.add('correct');
+    ro.expectedRank++;
+    if(ro.expectedRank > 4){
+      ro.correct++;
+      ro.locked = true;
+      qs('#ro-status').textContent = '¡Perfecto!';
+      setTimeout(advanceRo, 700);
+    }
+  } else {
+    box.classList.add('wrong');
+    ro.locked = true;
+    qs('#ro-status').textContent = '¡Casi! Vamos a la siguiente.';
+    setTimeout(advanceRo, 900);
+  }
+}
+
+function advanceRo(){
+  ro.round++;
+  if(ro.round >= ro.maxRounds){
+    finishRazOrden();
+  } else {
+    nextRoRound();
+  }
+}
+
+function finishRazOrden(){
+  pushHistory('raz-orden', ro.correct);
+  var best = getStore('vivaracha_best_raz_orden', null);
+  if(best === null || ro.correct > best) setStore('vivaracha_best_raz_orden', ro.correct);
+  showResult({
+    exerciseKey:'raz-orden',
+    hub:'screen-hub-razonamiento',
+    mark:'🌻',
+    title: ro.correct >= 3 ? '¡Todo bien ordenado!' : '¡Bien jugado!',
+    message:'Ordenaste bien ' + ro.correct + ' de ' + ro.maxRounds + ' veces.',
+    best: (best !== null) ? ('Tu mejor marca: ' + Math.max(best, ro.correct) + '/' + ro.maxRounds) : ('Tu mejor marca: ' + ro.correct + '/' + ro.maxRounds)
   });
 }
 
