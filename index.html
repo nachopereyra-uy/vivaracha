@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivaracha — Gimnasia para la cabeza</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%89%3C/text%3E%3C/svg%3E">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root{
+  --cream:#FBF1DE;
+  --card-bg:#FFFDF7;
+  --ink:#24323D;
+  --ink-soft:rgba(36,50,61,0.62);
+  --border-soft:rgba(36,50,61,0.14);
+
+  --verde:#3B6E4E;
+  --verde-d:#2C5239;
+  --verde-bg:rgba(59,110,78,0.10);
+
+  --dorado:#D89A3D;
+  --dorado-bg:rgba(216,154,61,0.16);
+
+  --ladrillo:#C1502E;
+  --ladrillo-d:#9C3F24;
+  --ladrillo-bg:rgba(193,80,46,0.10);
+
+  --azul:#3D7A8C;
+  --azul-d:#2F5F6E;
+  --azul-bg:rgba(61,122,140,0.10);
+
+  --ciruela:#7A4B6E;
+  --ciruela-d:#5F3A56;
+  --ciruela-bg:rgba(122,75,110,0.10);
+
+  --rojo-suave:#B6452F;
+  --verde-ok:#2C5239;
+
+  --font-display:'Fraunces', Georgia, serif;
+  --font-body:'Nunito', -apple-system, sans-serif;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:18px;
+  line-height:1.55;
+  min-height:100vh;
+  -webkit-tap-highlight-color:transparent;
+}
+h1,h2,h3{font-family:var(--font-display);margin:0;}
+p{margin:0;}
+button{font-family:var(--font-body);cursor:pointer;}
+button:focus-visible, a:focus-visible, input:focus-visible{
+  outline:3px solid var(--azul);
+  outline-offset:2px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+}
+
+/* ---------- layout shell ---------- */
+.appbar{
+  position:sticky; top:0; z-index:20;
+  display:flex; align-items:center; gap:.6rem;
+  background:var(--cream);
+  padding:1rem 1.1rem;
+  border-bottom:2px solid var(--border-soft);
+}
+.back-btn{
+  width:44px;height:44px;border-radius:50%;
+  border:2px solid var(--border-soft);
+  background:var(--card-bg);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;color:var(--ink);
+  flex-shrink:0;
+}
+.back-btn[hidden]{display:none;}
+.back-btn:active{transform:scale(0.93);}
+.wordmark{
+  display:flex; align-items:center; gap:.45rem;
+  font-family:var(--font-display); font-weight:700;
+  font-size:1.35rem; color:var(--verde);
+}
+.wordmark .spark{width:20px;height:20px;flex-shrink:0;}
+
+.app-content{
+  max-width:620px; margin:0 auto;
+  padding:1.5rem 1.25rem 3.5rem;
+}
+
+.screen[hidden]{display:none;}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  border:none; border-radius:16px;
+  font-weight:800; font-size:1.15rem;
+  padding:1.05rem 1.5rem;
+  width:100%;
+  transition:transform .08s ease;
+  color:#fff;
+}
+.btn:active{transform:scale(0.97);}
+.btn-verde{background:var(--verde);}
+.btn-verde:active{background:var(--verde-d);}
+.btn-ladrillo{background:var(--ladrillo);}
+.btn-ladrillo:active{background:var(--ladrillo-d);}
+.btn-azul{background:var(--azul);}
+.btn-azul:active{background:var(--azul-d);}
+.btn-ciruela{background:var(--ciruela);}
+.btn-ciruela:active{background:var(--ciruela-d);}
+.btn-outline{
+  background:var(--card-bg); color:var(--ink);
+  border:2px solid var(--border-soft);
+}
+.btn-outline:active{background:var(--cream);}
+
+/* ---------- welcome ---------- */
+.welcome-wrap{text-align:center; padding-top:2.5rem;}
+.welcome-mark{font-size:3.4rem; line-height:1;}
+.welcome-title{
+  font-size:2.4rem; color:var(--verde); margin-top:.6rem;
+}
+.welcome-tag{
+  color:var(--ink-soft); font-size:1.15rem; margin-top:.6rem;
+  max-width:380px; margin-left:auto; margin-right:auto;
+}
+.welcome-form{margin-top:2.4rem; text-align:left;}
+.welcome-form label{
+  display:block; font-weight:700; margin-bottom:.5rem; font-size:1.05rem;
+}
+.welcome-form input{
+  width:100%; font-family:var(--font-body); font-size:1.2rem;
+  padding:.95rem 1.1rem; border-radius:14px;
+  border:2px solid var(--border-soft); background:var(--card-bg);
+  color:var(--ink); margin-bottom:1.1rem;
+}
+.welcome-form input::placeholder{color:var(--ink-soft);}
+
+/* ---------- home ---------- */
+.home-greeting{font-size:2rem; color:var(--ink);}
+.home-date{color:var(--ink-soft); font-size:1.05rem; margin-top:.25rem;}
+.streak-chip{
+  display:inline-flex; align-items:center; gap:.4rem;
+  margin-top:1rem; padding:.55rem 1rem; border-radius:999px;
+  background:var(--dorado-bg); color:var(--ladrillo-d);
+  font-weight:800; font-size:.98rem;
+}
+.eyebrow{
+  text-transform:uppercase; letter-spacing:.08em; font-size:.85rem;
+  font-weight:800; color:var(--ink-soft); margin-top:2rem; margin-bottom:.9rem;
+}
+.game-card{
+  display:flex; align-items:center; gap:1rem;
+  width:100%; text-align:left;
+  background:var(--card-bg); border:2px solid var(--border-soft);
+  border-radius:18px; padding:1.1rem; margin-bottom:.9rem;
+  transition:transform .08s ease;
+}
+.game-card:active{transform:scale(0.98);}
+.game-icon{
+  width:58px; height:58px; border-radius:14px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.8rem;
+}
+.gi-memoria{background:var(--ladrillo-bg);}
+.gi-atencion{background:var(--azul-bg);}
+.gi-reflejos{background:var(--ciruela-bg);}
+.gi-razonamiento{background:var(--verde-bg);}
+.game-card-body{flex:1; min-width:0;}
+.game-card-title{font-family:var(--font-display); font-weight:700; font-size:1.25rem;}
+.game-card-desc{color:var(--ink-soft); font-size:.95rem; margin-top:.15rem;}
+.game-card-best{color:var(--ink-soft); font-size:.85rem; margin-top:.4rem; font-weight:700;}
+.chevron{font-size:1.4rem; color:var(--ink-soft); flex-shrink:0;}
+
+.reset-link{
+  display:block; text-align:center; margin-top:2rem;
+  color:var(--ink-soft); font-size:.88rem; text-decoration:underline;
+  background:none; border:none; width:100%;
+}
+
+/* ---------- generic game header ---------- */
+.game-header{display:flex; align-items:center; gap:.8rem; margin-bottom:1.4rem;}
+.game-header .game-icon{width:50px; height:50px; font-size:1.6rem;}
+.game-header h2{font-size:1.6rem;}
+.game-status{
+  text-align:center; font-weight:800; font-size:1.05rem;
+  color:var(--ink-soft); margin-bottom:1rem; min-height:1.4em;
+}
+.round-counter{
+  text-align:center; color:var(--ink-soft); font-weight:700;
+  font-size:.95rem; margin-bottom:.6rem;
+}
+.instructions{
+  background:var(--card-bg); border:2px solid var(--border-soft);
+  border-radius:18px; padding:1.3rem; margin-bottom:1.5rem;
+  font-size:1.08rem;
+}
+.instructions strong{display:block; font-family:var(--font-display); font-size:1.3rem; margin-bottom:.5rem;}
+
+/* ---------- memoria ---------- */
+.mem-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem;
+  margin-bottom:1.5rem;
+}
+.mem-cell{
+  aspect-ratio:1; border-radius:18px; border:2px solid var(--border-soft);
+  background:var(--card-bg); font-size:2.4rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .15s ease, background .15s ease;
+}
+.mem-cell.active{background:var(--ladrillo); transform:scale(1.06); border-color:var(--ladrillo-d);}
+.mem-cell.correct{background:var(--verde-bg); border-color:var(--verde);}
+.mem-cell.wrong{background:rgba(182,69,47,0.18); border-color:var(--rojo-suave);}
+.mem-cell:disabled{opacity:1;}
+
+/* ---------- atencion ---------- */
+.atn-grid{
+  display:grid; gap:.7rem; margin-bottom:1.2rem;
+}
+.atn-cell{
+  aspect-ratio:1; border-radius:16px; border:2px solid var(--border-soft);
+  background:var(--card-bg); font-size:1.9rem;
+  display:flex; align-items:center; justify-content:center;
+}
+.atn-cell.wrong{animation:shake .3s ease;}
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-5px);}
+  75%{transform:translateX(5px);}
+}
+
+/* ---------- reflejos ---------- */
+.ref-area{
+  position:relative; height:300px; border-radius:18px;
+  border:2px dashed var(--border-soft); background:var(--card-bg);
+  margin-bottom:1.2rem; overflow:hidden;
+}
+.ref-target{
+  position:absolute; width:74px; height:74px; border-radius:50%;
+  background:var(--ciruela); color:#fff; font-size:2rem;
+  display:flex; align-items:center; justify-content:center;
+  border:none;
+}
+.ref-target:active{transform:scale(0.92);}
+.ref-feedback{
+  text-align:center; font-weight:800; color:var(--verde-d); min-height:1.4em; margin-bottom:.6rem;
+}
+
+/* ---------- razonamiento ---------- */
+.raz-seq{
+  display:grid; grid-template-columns:repeat(5,1fr); gap:.5rem;
+  margin-bottom:1.6rem;
+}
+.raz-box{
+  aspect-ratio:1; border-radius:14px; border:2px solid var(--border-soft);
+  background:var(--card-bg); font-size:1.7rem;
+  display:flex; align-items:center; justify-content:center;
+}
+.raz-box.unknown{
+  border:2px dashed var(--verde); color:var(--verde); font-weight:800;
+}
+.raz-options{display:flex; gap:.8rem;}
+.raz-opt{
+  flex:1; aspect-ratio:1; border-radius:16px; border:2px solid var(--border-soft);
+  background:var(--card-bg); font-size:2.1rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .08s ease;
+}
+.raz-opt:active{transform:scale(0.95);}
+.raz-opt.correct{background:var(--verde-bg); border-color:var(--verde);}
+.raz-opt.wrong{background:rgba(182,69,47,0.18); border-color:var(--rojo-suave);}
+
+/* ---------- result ---------- */
+.result-wrap{text-align:center; padding-top:1rem;}
+.result-mark{font-size:3rem;}
+.result-title{font-size:1.9rem; margin-top:.5rem;}
+.result-message{color:var(--ink-soft); font-size:1.15rem; margin-top:.7rem; line-height:1.6;}
+.result-best{
+  display:inline-block; margin-top:1.2rem; padding:.7rem 1.2rem;
+  background:var(--dorado-bg); color:var(--ladrillo-d); border-radius:14px;
+  font-weight:800;
+}
+.result-actions{margin-top:2rem; display:flex; flex-direction:column; gap:.8rem;}
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <button class="back-btn" id="backBtn" hidden aria-label="Volver">←</button>
+  <div class="wordmark">
+    <svg class="spark" viewBox="0 0 24 24" fill="none">
+      <path d="M12 1 L14.2 9.2 L22.5 11 L14.2 12.8 L12 21 L9.8 12.8 L1.5 11 L9.8 9.2 Z" fill="#D89A3D"/>
+    </svg>
+    Vivaracha
+  </div>
+</header>
+
+<main class="app-content">
+
+  <!-- WELCOME -->
+  <section class="screen" id="screen-welcome">
+    <div class="welcome-wrap">
+      <div class="welcome-mark">🧉</div>
+      <h1 class="welcome-title">Vivaracha</h1>
+      <p class="welcome-tag">Gimnasia para la cabeza, todos los días un poquito.</p>
+    </div>
+    <form class="welcome-form" id="welcomeForm">
+      <label for="nameInput">¿Cómo te llamamos?</label>
+      <input type="text" id="nameInput" placeholder="Tu nombre" autocomplete="off">
+      <button type="submit" class="btn btn-verde">Empezar</button>
+    </form>
+  </section>
+
+  <!-- HOME -->
+  <section class="screen" id="screen-home" hidden>
+    <h1 class="home-greeting" id="homeGreeting">¡Hola!</h1>
+    <p class="home-date" id="homeDate"></p>
+    <div id="streakWrap"></div>
+
+    <p class="eyebrow">Elegí tu ejercicio</p>
+
+    <button class="game-card" data-game="memoria">
+      <div class="game-icon gi-memoria">🧉</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Memoria</div>
+        <div class="game-card-desc">Recordá el orden en que aparecen los íconos.</div>
+        <div class="game-card-best" id="bestMemoria">Sin jugar todavía</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
+
+    <button class="game-card" data-game="atencion">
+      <div class="game-icon gi-atencion">🔍</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Atención</div>
+        <div class="game-card-desc">Encontrá el que es diferente, lo más rápido que puedas.</div>
+        <div class="game-card-best" id="bestAtencion">Sin jugar todavía</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
+
+    <button class="game-card" data-game="reflejos">
+      <div class="game-icon gi-reflejos">⚡</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Reflejos</div>
+        <div class="game-card-desc">Tocá la estrella en cuanto aparezca.</div>
+        <div class="game-card-best" id="bestReflejos">Sin jugar todavía</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
+
+    <button class="game-card" data-game="razonamiento">
+      <div class="game-icon gi-razonamiento">🧩</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Razonamiento</div>
+        <div class="game-card-desc">Descubrí qué sigue en la secuencia.</div>
+        <div class="game-card-best" id="bestRazonamiento">Sin jugar todavía</div>
+      </div>
+      <div class="chevron">›</div>
+    </button>
+
+    <button class="reset-link" id="resetLink">Borrar mis datos y empezar de nuevo</button>
+  </section>
+
+  <!-- MEMORIA -->
+  <section class="screen" id="screen-memoria" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-memoria">🧉</div>
+      <h2>Memoria</h2>
+    </div>
+
+    <div id="memoriaIntro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Vamos a iluminar algunos íconos, uno por uno. Mirá bien el orden. Después te toca a vos: tocalos en el mismo orden en que aparecieron.
+      </div>
+      <button class="btn btn-ladrillo" id="memoriaStart">¡Arrancar!</button>
+    </div>
+
+    <div id="memoriaPlay" hidden>
+      <div class="round-counter" id="memRoundCounter"></div>
+      <div class="game-status" id="memStatus"></div>
+      <div class="mem-grid" id="memGrid"></div>
+    </div>
+  </section>
+
+  <!-- ATENCION -->
+  <section class="screen" id="screen-atencion" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-atencion">🔍</div>
+      <h2>Atención</h2>
+    </div>
+
+    <div id="atencionIntro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Todos los íconos son iguales, menos uno. Encontrá el diferente y tocalo lo más rápido que puedas.
+      </div>
+      <button class="btn btn-azul" id="atencionStart">¡Arrancar!</button>
+    </div>
+
+    <div id="atencionPlay" hidden>
+      <div class="round-counter" id="atnRoundCounter"></div>
+      <div class="game-status" id="atnStatus">Encontrá el diferente</div>
+      <div class="atn-grid" id="atnGrid"></div>
+    </div>
+  </section>
+
+  <!-- REFLEJOS -->
+  <section class="screen" id="screen-reflejos" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-reflejos">⚡</div>
+      <h2>Reflejos</h2>
+    </div>
+
+    <div id="reflejosIntro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Va a aparecer una estrella ⭐ en algún lugar del recuadro. Tocala apenas la veas.
+      </div>
+      <button class="btn btn-ciruela" id="reflejosStart">¡Arrancar!</button>
+    </div>
+
+    <div id="reflejosPlay" hidden>
+      <div class="round-counter" id="refRoundCounter"></div>
+      <div class="ref-feedback" id="refFeedback"></div>
+      <div class="ref-area" id="refArea">
+        <div class="game-status" id="refStatus" style="padding-top:2.2rem;">Esperá...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RAZONAMIENTO -->
+  <section class="screen" id="screen-razonamiento" hidden>
+    <div class="game-header">
+      <div class="game-icon gi-razonamiento">🧩</div>
+      <h2>Razonamiento</h2>
+    </div>
+
+    <div id="razonamientoIntro">
+      <div class="instructions">
+        <strong>Cómo se juega</strong>
+        Mirá la secuencia de íconos. Elegí, entre las tres opciones, cuál sigue.
+      </div>
+      <button class="btn btn-verde" id="razonamientoStart">¡Arrancar!</button>
+    </div>
+
+    <div id="razonamientoPlay" hidden>
+      <div class="round-counter" id="razRoundCounter"></div>
+      <div class="raz-seq" id="razSeq"></div>
+      <div class="raz-options" id="razOptions"></div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section class="screen" id="screen-result" hidden>
+    <div class="result-wrap">
+      <div class="result-mark" id="resultMark">✨</div>
+      <h2 class="result-title" id="resultTitle"></h2>
+      <p class="result-message" id="resultMessage"></p>
+      <div class="result-best" id="resultBest"></div>
+      <div class="result-actions">
+        <button class="btn btn-verde" id="playAgainBtn">Jugar de nuevo</button>
+        <button class="btn btn-outline" id="homeFromResultBtn">Volver al inicio</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* ===================== helpers ===================== */
+function qs(sel, root){ return (root||document).querySelector(sel); }
+function qsa(sel, root){
+  var nodeList = (root||document).querySelectorAll(sel);
+  var arr = [];
+  for(var i=0;i<nodeList.length;i++){ arr.push(nodeList[i]); }
+  return arr;
+}
+function closestByClass(el, className){
+  while(el && el.nodeType === 1){
+    if(el.classList && el.classList.contains(className)) return el;
+    el = el.parentNode;
+  }
+  return null;
+}
+function pad2(n){
+  n = String(n);
+  return n.length < 2 ? ('0' + n) : n;
+}
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=a[i]; a[i]=a[j]; a[j]=t;
+  }
+  return a;
+}
+function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+/* Algunos entornos (como la vista previa de artifacts) no permiten localStorage.
+   Probamos una vez al cargar, y si falla, usamos un objeto en memoria como respaldo
+   para que el juego nunca se rompa, aunque no se guarden los puntajes entre sesiones. */
+var storageAvailable = (function(){
+  try{
+    var k = '__viv_test__';
+    localStorage.setItem(k, '1');
+    localStorage.removeItem(k);
+    return true;
+  }catch(e){ return false; }
+})();
+var memoryStore = {};
+
+function getStore(key, fallback){
+  try{
+    if(storageAvailable){
+      var v = localStorage.getItem(key);
+      return v===null ? fallback : JSON.parse(v);
+    } else {
+      return (key in memoryStore) ? JSON.parse(memoryStore[key]) : fallback;
+    }
+  }catch(e){ return fallback; }
+}
+function setStore(key, val){
+  try{
+    if(storageAvailable){
+      localStorage.setItem(key, JSON.stringify(val));
+    } else {
+      memoryStore[key] = JSON.stringify(val);
+    }
+  }catch(e){}
+}
+function todayISO(){
+  var d = new Date();
+  return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());
+}
+function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+var ICONS = ['🧉','⭐','🌻','🌙','🍪','🐦'];
+
+/* ===================== navigation ===================== */
+var SCREEN_PARENT = {
+  'screen-home': null,
+  'screen-welcome': null,
+  'screen-memoria': 'screen-home',
+  'screen-atencion': 'screen-home',
+  'screen-reflejos': 'screen-home',
+  'screen-razonamiento': 'screen-home',
+  'screen-result': 'screen-home'
+};
+var currentScreen = null;
+
+function showScreen(id){
+  qsa('.screen').forEach(function(s){ s.hidden = (s.id !== id); });
+  currentScreen = id;
+  var back = qs('#backBtn');
+  if(SCREEN_PARENT[id]){ back.hidden = false; } else { back.hidden = true; }
+  window.scrollTo(0,0);
+}
+
+qs('#backBtn').addEventListener('click', function(){
+  var parent = SCREEN_PARENT[currentScreen];
+  if(parent) showScreen(parent);
+});
+
+/* ===================== welcome / home ===================== */
+qs('#welcomeForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var name = qs('#nameInput').value.trim();
+  setStore('vivaracha_name', name);
+  goHome();
+});
+
+function goHome(){
+  renderHome();
+  showScreen('screen-home');
+}
+
+function renderHome(){
+  var name = getStore('vivaracha_name', '');
+  qs('#homeGreeting').textContent = name ? ('¡Hola, ' + name + '!') : '¡Hola!';
+
+  var dateStr = new Intl.DateTimeFormat('es-UY', { weekday:'long', day:'numeric', month:'long' }).format(new Date());
+  qs('#homeDate').textContent = capitalize(dateStr);
+
+  // streak
+  var dates = getStore('vivaracha_playdates', []);
+  var streakWrap = qs('#streakWrap');
+  streakWrap.innerHTML = '';
+  if(dates.length === 0){
+    var chip = document.createElement('div');
+    chip.className = 'streak-chip';
+    chip.textContent = '✨ Hoy es tu primer día. ¡Vamos!';
+    streakWrap.appendChild(chip);
+  } else {
+    var streak = computeStreak(dates);
+    if(streak >= 2){
+      var chip2 = document.createElement('div');
+      chip2.className = 'streak-chip';
+      chip2.textContent = '✨ Llevás ' + streak + ' días seguidos. ¡Así se hace!';
+      streakWrap.appendChild(chip2);
+    } else {
+      var chip3 = document.createElement('div');
+      chip3.className = 'streak-chip';
+      chip3.textContent = '✨ Ya hiciste tu gimnasia de hoy. ¡Volvé mañana!';
+      streakWrap.appendChild(chip3);
+    }
+  }
+
+  // best scores
+  var bm = getStore('vivaracha_best_memoria', null);
+  qs('#bestMemoria').textContent = bm ? ('Mejor: ' + bm + ' en fila') : 'Sin jugar todavía';
+
+  var ba = getStore('vivaracha_best_atencion', null);
+  qs('#bestAtencion').textContent = ba ? ('Mejor: ' + ba.toFixed(1) + 's de promedio') : 'Sin jugar todavía';
+
+  var br = getStore('vivaracha_best_reflejos', null);
+  qs('#bestReflejos').textContent = br ? ('Mejor: ' + br.toFixed(2) + 's de promedio') : 'Sin jugar todavía';
+
+  var bz = getStore('vivaracha_best_razonamiento', null);
+  qs('#bestRazonamiento').textContent = (bz !== null && bz !== undefined) ? ('Mejor: ' + bz + ' de 5') : 'Sin jugar todavía';
+}
+
+function computeStreak(dates){
+  var set = {};
+  dates.forEach(function(d){ set[d]=true; });
+  var count = 0;
+  var d = new Date();
+  while(true){
+    var iso = d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());
+    if(set[iso]){ count++; d.setDate(d.getDate()-1); } else { break; }
+  }
+  return count;
+}
+
+function recordPlayToday(){
+  var dates = getStore('vivaracha_playdates', []);
+  var today = todayISO();
+  if(dates.indexOf(today) === -1){
+    dates.push(today);
+    setStore('vivaracha_playdates', dates);
+  }
+}
+
+qsa('.game-card').forEach(function(card){
+  card.addEventListener('click', function(){
+    var game = card.dataset.game;
+    openGame(game);
+  });
+});
+
+qs('#resetLink').addEventListener('click', function(){
+  if(confirm('¿Borrar todo tu progreso guardado en este dispositivo?')){
+    if(storageAvailable){ try{ localStorage.clear(); }catch(e){} }
+    memoryStore = {};
+    location.reload();
+  }
+});
+
+function openGame(game){
+  if(game === 'memoria'){
+    qs('#memoriaPlay').hidden = true;
+    qs('#memoriaIntro').hidden = false;
+    showScreen('screen-memoria');
+  } else if(game === 'atencion'){
+    qs('#atencionPlay').hidden = true;
+    qs('#atencionIntro').hidden = false;
+    showScreen('screen-atencion');
+  } else if(game === 'reflejos'){
+    qs('#reflejosPlay').hidden = true;
+    qs('#reflejosIntro').hidden = false;
+    showScreen('screen-reflejos');
+  } else if(game === 'razonamiento'){
+    qs('#razonamientoPlay').hidden = true;
+    qs('#razonamientoIntro').hidden = false;
+    showScreen('screen-razonamiento');
+  }
+}
+
+/* ===================== result screen ===================== */
+var lastGame = null;
+
+function showResult(opts){
+  lastGame = opts.game;
+  qs('#resultMark').textContent = opts.mark || '✨';
+  qs('#resultTitle').textContent = opts.title;
+  qs('#resultMessage').textContent = opts.message;
+  qs('#resultBest').textContent = opts.best || '';
+  qs('#resultBest').style.display = opts.best ? 'inline-block' : 'none';
+  recordPlayToday();
+  showScreen('screen-result');
+}
+
+qs('#playAgainBtn').addEventListener('click', function(){
+  if(lastGame) openGame(lastGame);
+});
+qs('#homeFromResultBtn').addEventListener('click', function(){
+  goHome();
+});
+
+/* ===================== MEMORIA ===================== */
+var mem = { cellIcons:[], seq:[], inputIndex:0, level:3, rounds:0, maxRounds:6, lastSuccessLevel:0 };
+
+qs('#memoriaStart').addEventListener('click', startMemoria);
+
+function startMemoria(){
+  mem.cellIcons = shuffle(ICONS).slice(0,6);
+  mem.level = 3;
+  mem.rounds = 0;
+  mem.lastSuccessLevel = 0;
+  var grid = qs('#memGrid');
+  grid.innerHTML = '';
+  mem.cellIcons.forEach(function(icon, i){
+    var btn = document.createElement('button');
+    btn.className = 'mem-cell';
+    btn.textContent = icon;
+    btn.dataset.index = i;
+    btn.disabled = true;
+    grid.appendChild(btn);
+  });
+  grid.onclick = function(e){
+    var btn = closestByClass(e.target, 'mem-cell');
+    if(!btn || btn.disabled) return;
+    handleMemClick(parseInt(btn.dataset.index,10), btn);
+  };
+  qs('#memoriaIntro').hidden = true;
+  qs('#memoriaPlay').hidden = false;
+  nextMemRound();
+}
+
+function nextMemRound(){
+  mem.seq = [];
+  for(var i=0;i<mem.level;i++){ mem.seq.push(randInt(0,5)); }
+  mem.inputIndex = 0;
+  qs('#memRoundCounter').textContent = 'Ronda ' + (mem.rounds+1) + ' de ' + mem.maxRounds;
+  playMemSequence(mem.seq);
+}
+
+function setMemCellsDisabled(disabled){
+  qsa('.mem-cell').forEach(function(c){ c.disabled = disabled; });
+}
+
+function playMemSequence(seq){
+  qs('#memStatus').textContent = 'Mirá bien...';
+  setMemCellsDisabled(true);
+  setTimeout(function(){ showMemStep(seq, 0); }, 500);
+}
+
+function showMemStep(seq, i){
+  if(i >= seq.length){
+    qs('#memStatus').textContent = 'Tu turno: tocá en el mismo orden';
+    setMemCellsDisabled(false);
+    return;
+  }
+  var cell = qs('.mem-cell[data-index="'+seq[i]+'"]');
+  cell.classList.add('active');
+  setTimeout(function(){
+    cell.classList.remove('active');
+    setTimeout(function(){ showMemStep(seq, i+1); }, 250);
+  }, 600);
+}
+
+function handleMemClick(index, btn){
+  if(index === mem.seq[mem.inputIndex]){
+    btn.classList.add('correct');
+    setTimeout(function(){ btn.classList.remove('correct'); }, 300);
+    mem.inputIndex++;
+    if(mem.inputIndex === mem.seq.length){
+      mem.rounds++;
+      mem.lastSuccessLevel = mem.level;
+      var best = getStore('vivaracha_best_memoria', null);
+      if(!best || mem.level > best) setStore('vivaracha_best_memoria', mem.level);
+      if(mem.rounds >= mem.maxRounds){
+        finishMemoria(true);
+      } else {
+        qs('#memStatus').textContent = '¡Muy bien!';
+        setMemCellsDisabled(true);
+        mem.level = Math.min(mem.level + 1, 8);
+        setTimeout(nextMemRound, 900);
+      }
+    }
+  } else {
+    btn.classList.add('wrong');
+    setMemCellsDisabled(true);
+    qs('#memStatus').textContent = '¡Casi! Vamos a ver cómo quedó.';
+    setTimeout(function(){ finishMemoria(false); }, 900);
+  }
+}
+
+function finishMemoria(completedAll){
+  var bestLevel = getStore('vivaracha_best_memoria', null);
+  var msg;
+  if(completedAll){
+    msg = '¡Llegaste hasta el final! Recordaste secuencias de hasta ' + mem.lastSuccessLevel + ' íconos.';
+  } else if(mem.lastSuccessLevel > 0){
+    msg = 'Llegaste a recordar secuencias de hasta ' + mem.lastSuccessLevel + ' íconos, en ' + mem.rounds + ' ' + (mem.rounds===1?'ronda':'rondas') + ' seguidas.';
+  } else {
+    msg = 'Esta vez no llegaste a completar la primera ronda. ¡Probemos de nuevo, seguro te sale!';
+  }
+  showResult({
+    game:'memoria',
+    mark:'🧉',
+    title: completedAll ? '¡Memoria de elefante!' : '¡Buen intento!',
+    message: msg,
+    best: bestLevel ? ('Tu mejor marca: ' + bestLevel + ' en fila') : ''
+  });
+}
+
+/* ===================== ATENCION ===================== */
+var atn = { round:0, maxRounds:5, sizes:[9,12,12,16,16], times:[], oddIndex:0, startTime:0 };
+
+qs('#atencionStart').addEventListener('click', startAtencion);
+
+function startAtencion(){
+  atn.round = 0;
+  atn.times = [];
+  qs('#atencionIntro').hidden = true;
+  qs('#atencionPlay').hidden = false;
+  nextAtnRound();
+}
+
+function nextAtnRound(){
+  var n = atn.sizes[atn.round];
+  var cols = Math.ceil(Math.sqrt(n));
+  var grid = qs('#atnGrid');
+  grid.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
+  grid.innerHTML = '';
+
+  var pool = shuffle(ICONS);
+  var base = pool[0];
+  var odd = pool[1];
+  atn.oddIndex = randInt(0, n-1);
+
+  for(var i=0;i<n;i++){
+    var btn = document.createElement('button');
+    btn.className = 'atn-cell';
+    btn.textContent = (i === atn.oddIndex) ? odd : base;
+    btn.dataset.index = i;
+    grid.appendChild(btn);
+  }
+  qs('#atnRoundCounter').textContent = 'Ronda ' + (atn.round+1) + ' de ' + atn.maxRounds;
+  qs('#atnStatus').textContent = 'Encontrá el diferente';
+  atn.startTime = performance.now();
+
+  grid.onclick = function(e){
+    var btn = closestByClass(e.target, 'atn-cell');
+    if(!btn) return;
+    var idx = parseInt(btn.dataset.index,10);
+    if(idx === atn.oddIndex){
+      var elapsed = (performance.now() - atn.startTime) / 1000;
+      atn.times.push(elapsed);
+      atn.round++;
+      if(atn.round >= atn.maxRounds){
+        finishAtencion();
+      } else {
+        nextAtnRound();
+      }
+    } else {
+      btn.classList.add('wrong');
+      setTimeout(function(){ btn.classList.remove('wrong'); }, 300);
+    }
+  };
+}
+
+function finishAtencion(){
+  var avg = atn.times.reduce(function(a,b){return a+b;},0) / atn.times.length;
+  var best = getStore('vivaracha_best_atencion', null);
+  if(!best || avg < best) setStore('vivaracha_best_atencion', avg);
+  showResult({
+    game:'atencion',
+    mark:'🔍',
+    title:'¡Buen ojo!',
+    message:'Encontraste las diferencias en un promedio de ' + avg.toFixed(1) + ' segundos.',
+    best: best ? ('Tu mejor marca: ' + Math.min(best,avg).toFixed(1) + 's') : ('Tu mejor marca: ' + avg.toFixed(1) + 's')
+  });
+}
+
+/* ===================== REFLEJOS ===================== */
+var ref = { round:0, maxRounds:6, times:[], appearTime:0 };
+
+qs('#reflejosStart').addEventListener('click', startReflejos);
+
+function startReflejos(){
+  ref.round = 0;
+  ref.times = [];
+  qs('#reflejosIntro').hidden = true;
+  qs('#reflejosPlay').hidden = false;
+  qs('#refFeedback').textContent = '';
+  nextRefRound();
+}
+
+function nextRefRound(){
+  qs('#refRoundCounter').textContent = 'Ronda ' + (ref.round+1) + ' de ' + ref.maxRounds;
+  var area = qs('#refArea');
+  area.innerHTML = '<div class="game-status" id="refStatus" style="padding-top:2.2rem;">Esperá...</div>';
+
+  var wait = randInt(700, 2200);
+  setTimeout(function(){
+    if(currentScreen !== 'screen-reflejos') return;
+    area.innerHTML = '';
+    var btn = document.createElement('button');
+    btn.className = 'ref-target';
+    btn.textContent = '⭐';
+    var maxLeft = area.clientWidth - 80;
+    var maxTop = area.clientHeight - 80;
+    btn.style.left = randInt(6, Math.max(maxLeft,6)) + 'px';
+    btn.style.top = randInt(6, Math.max(maxTop,6)) + 'px';
+    area.appendChild(btn);
+    ref.appearTime = performance.now();
+    btn.addEventListener('click', function(){
+      var elapsed = (performance.now() - ref.appearTime) / 1000;
+      ref.times.push(elapsed);
+      qs('#refFeedback').textContent = elapsed.toFixed(2) + 's ¡' + (elapsed < 0.8 ? 'Excelente!' : 'Bien!');
+      ref.round++;
+      area.innerHTML = '';
+      if(ref.round >= ref.maxRounds){
+        setTimeout(finishReflejos, 500);
+      } else {
+        setTimeout(nextRefRound, 500);
+      }
+    });
+  }, wait);
+}
+
+function finishReflejos(){
+  var avg = ref.times.reduce(function(a,b){return a+b;},0) / ref.times.length;
+  var best = getStore('vivaracha_best_reflejos', null);
+  if(!best || avg < best) setStore('vivaracha_best_reflejos', avg);
+  showResult({
+    game:'reflejos',
+    mark:'⚡',
+    title:'¡Reflejos felinos!',
+    message:'Tu tiempo de reacción promedio fue ' + avg.toFixed(2) + ' segundos.',
+    best: best ? ('Tu mejor marca: ' + Math.min(best,avg).toFixed(2) + 's') : ('Tu mejor marca: ' + avg.toFixed(2) + 's')
+  });
+}
+
+/* ===================== RAZONAMIENTO ===================== */
+var RAZ_BANK = [
+  { seq:['🧉','⭐','🧉','⭐'], answer:'🧉', distractors:['⭐','🌙'] },
+  { seq:['🌻','🌻','🌙','🌻'], answer:'🌻', distractors:['🌙','🐦'] },
+  { seq:['🧉','⭐','🌻','🧉'], answer:'⭐', distractors:['🌙','🍪'] },
+  { seq:['🧉','⭐','🌻','🌙'], answer:'🧉', distractors:['⭐','🍪'] },
+  { seq:['⭐','🍪','🍪','⭐'], answer:'⭐', distractors:['🌙','🐦'] },
+  { seq:['🌙','🐦','🌙','🐦'], answer:'🌙', distractors:['⭐','🍪'] },
+  { seq:['🍪','🍪','🐦','🍪'], answer:'🍪', distractors:['🐦','🌻'] },
+  { seq:['🌻','🌙','⭐','🍪'], answer:'🌻', distractors:['🐦','🧉'] }
+];
+
+var raz = { puzzles:[], round:0, maxRounds:5, correct:0, answeredFirstTry:false };
+
+qs('#razonamientoStart').addEventListener('click', startRazonamiento);
+
+function startRazonamiento(){
+  raz.puzzles = shuffle(RAZ_BANK).slice(0,5);
+  raz.round = 0;
+  raz.correct = 0;
+  qs('#razonamientoIntro').hidden = true;
+  qs('#razonamientoPlay').hidden = false;
+  nextRazRound();
+}
+
+function nextRazRound(){
+  raz.answeredFirstTry = true;
+  var puzzle = raz.puzzles[raz.round];
+  qs('#razRoundCounter').textContent = 'Ronda ' + (raz.round+1) + ' de ' + raz.maxRounds;
+
+  var seqEl = qs('#razSeq');
+  seqEl.innerHTML = '';
+  puzzle.seq.forEach(function(icon){
+    var box = document.createElement('div');
+    box.className = 'raz-box';
+    box.textContent = icon;
+    seqEl.appendChild(box);
+  });
+  var unknownBox = document.createElement('div');
+  unknownBox.className = 'raz-box unknown';
+  unknownBox.textContent = '❓';
+  seqEl.appendChild(unknownBox);
+
+  var options = shuffle([puzzle.answer].concat(puzzle.distractors));
+  var optEl = qs('#razOptions');
+  optEl.innerHTML = '';
+  options.forEach(function(opt){
+    var btn = document.createElement('button');
+    btn.className = 'raz-opt';
+    btn.textContent = opt;
+    btn.dataset.value = opt;
+    optEl.appendChild(btn);
+  });
+
+  optEl.onclick = function(e){
+    var btn = closestByClass(e.target, 'raz-opt');
+    if(!btn) return;
+    handleRazClick(btn, puzzle, optEl);
+  };
+}
+
+function handleRazClick(btn, puzzle, optEl){
+  qsa('.raz-opt', optEl).forEach(function(b){ b.onclick = null; });
+  optEl.style.pointerEvents = 'none';
+  var isCorrect = btn.dataset.value === puzzle.answer;
+  if(isCorrect){
+    btn.classList.add('correct');
+    if(raz.answeredFirstTry) raz.correct++;
+  } else {
+    btn.classList.add('wrong');
+    raz.answeredFirstTry = false;
+    var correctBtn = null;
+    var razOpts = qsa('.raz-opt', optEl);
+    for(var oi=0; oi<razOpts.length; oi++){
+      if(razOpts[oi].dataset.value === puzzle.answer){ correctBtn = razOpts[oi]; break; }
+    }
+    if(correctBtn) correctBtn.classList.add('correct');
+  }
+  setTimeout(function(){
+    optEl.style.pointerEvents = '';
+    raz.round++;
+    if(raz.round >= raz.maxRounds){
+      finishRazonamiento();
+    } else {
+      nextRazRound();
+    }
+  }, 800);
+}
+
+function finishRazonamiento(){
+  var best = getStore('vivaracha_best_razonamiento', null);
+  if(best === null || raz.correct > best) setStore('vivaracha_best_razonamiento', raz.correct);
+  showResult({
+    game:'razonamiento',
+    mark:'🧩',
+    title: raz.correct >= 4 ? '¡Mente afilada!' : '¡Bien jugado!',
+    message:'Resolviste ' + raz.correct + ' de ' + raz.maxRounds + ' patrones a la primera.',
+    best: (best !== null) ? ('Tu mejor marca: ' + Math.max(best, raz.correct) + '/' + raz.maxRounds) : ('Tu mejor marca: ' + raz.correct + '/' + raz.maxRounds)
+  });
+}
+
+/* ===================== init ===================== */
+(function init(){
+  var name = getStore('vivaracha_name', null);
+  if(name === null){
+    showScreen('screen-welcome');
+  } else {
+    goHome();
+  }
+})();
+</script>
+</body>
+</html>
